@@ -12,4 +12,11 @@ router.post("/login", authController.login);
 // Получение данных пользователя (защищенный роут)
 router.get("/me", authMiddleware, authController.getMe);
 
+router.use(authMiddleware);
+
+router.get('/me', authController.getMe);
+router.patch('/change-password', authController.changePassword);
+
+module.exports = router;
+
 module.exports = router;

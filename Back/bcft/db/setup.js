@@ -27,5 +27,15 @@ module.exports = {
       password VARCHAR(100) NOT NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
+  `,
+  updatePassword: `
+    UPDATE users 
+    SET password = $1 
+    WHERE id = $2 
+    RETURNING id, username, email, created_at
+  `,
+  findUserByEmail: `
+    SELECT * FROM users 
+    WHERE email = $1
   `
 };

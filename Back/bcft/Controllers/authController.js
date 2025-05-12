@@ -86,3 +86,31 @@ exports.getMe = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+exports.changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const userId = req.user.id;
+
+    // Получение текущего пользователя
+    const user = await pool.query(queries.findUserById, [userId]);
+    if (user.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Проверка текущего пароля
+    const isMatch = await bcrypt.compare(currentPassword, user.rows[0].password);
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Current password is incorrect' });
+    }
+
+    // Хеширование нового пароля
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+    // Обновление пароля
+    await pool.query(queries.updatePassword, [hashedPassword, userId]);
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

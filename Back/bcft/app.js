@@ -17,7 +17,7 @@ pool
   .catch((err) => console.error("Table creation error:", err));
 
 // Роуты
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes); // http://localhost:5001/api/auth/register
 
 // Обработка ошибок
 app.use((err, req, res, next) => {
