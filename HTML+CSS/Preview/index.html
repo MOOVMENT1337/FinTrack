@@ -36,50 +36,41 @@
     </div>
 
     <div class="market-indexes">
-      <div class="index-card red">
+      <div class="index-card red" data-symbol="MOEX:IMOEX">
         <span>🇷🇺 Индекс МосБиржи</span>
         <strong>2 958,75</strong>
         <span class="percent">−2,50%</span>
       </div>
-      <div class="index-card red">
+      <div class="index-card red" data-symbol="MOEX:RTSI">
         <span>🇷🇺 Индекс РТС</span>
         <strong>1 142,68</strong>
         <span class="percent">−1,32%</span>
       </div>
-      <div class="index-card green">
+      <div class="index-card green" data-symbol="SP:SPX">
         <span>S&P 500</span>
         <strong>5 536,56</strong>
         <span class="percent">+0,14%</span>
       </div>
-      <div class="index-card green">
+      <div class="index-card green" data-symbol="NASDAQ:NDX">
         <span>Nasdaq 100</span>
         <strong>19 499,34</strong>
         <span class="percent">+0,37%</span>
       </div>
+      <div class="index-card green" data-symbol="DOW:DJI">
+        <span>Dow 30</span>
+        <strong>39 000,12</strong>
+        <span class="percent">+0,25%</span>
+      </div>
+      <div class="index-card green" data-symbol="NYSE:NYA">
+        <span>NYSE Composite</span>
+        <strong>17 845,67</strong>
+        <span class="percent">+0,18%</span>
+      </div>
     </div>
 
     <div class="chart-container">
-      <!-- Встроенный график от TradingView -->
       <div class="tradingview-widget-container">
         <div id="tradingview_chart"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-        <script type="text/javascript">
-          new TradingView.widget({
-            "width": "100%",
-            "height": 400,
-            "symbol": "MOEX:IMOEX",
-            "interval": "D",
-            "timezone": "Etc/UTC",
-            "theme": "dark",
-            "style": "1",
-            "locale": "ru",
-            "toolbar_bg": "#1e1e1e",
-            "enable_publishing": false,
-            "hide_top_toolbar": true,
-            "withdateranges": false,
-            "container_id": "tradingview_chart"
-          });
-        </script>
       </div>
     </div>
 
@@ -173,124 +164,178 @@
     </section>
 
     <section class="leaders-section">
-  <div class="section-header">
-    <h3>Лидеры роста</h3>
-    <h3>Лидеры падения</h3>
-  </div>
-  
-  <div class="leaders-container">
-    <!-- Блок "Лидеры роста" -->
-    <div class="leaders-block">
-      <div class="leaders-list">
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">АО "УК "Кузбассраврезуголь" - обыкн.</span>
-            <span class="leader-ticker">KZRU</span>
-            <span class="leader-price">52,000 RUB</span>
+      <div class="section-header">
+        <h3>Лидеры роста</h3>
+        <h3>Лидеры падения</h3>
+      </div>
+      
+      <div class="leaders-container">
+        <!-- Блок "Лидеры роста" -->
+        <div class="leaders-block">
+          <div class="leaders-list">
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">АО "УК "Кузбассраврезуголь" - обыкн.</span>
+                <span class="leader-ticker">KZRU</span>
+                <span class="leader-price">52,000 RUB</span>
+              </div>
+              <span class="leader-change positive">+21,97%</span>
+            </div>
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">ПАО "МЭСС" - обыкн.</span>
+                <span class="leader-ticker">MESS</span>
+                <span class="leader-price">0,089979 RUB</span>
+              </div>
+              <span class="leader-change positive">+9,73%</span>
+            </div>
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">ПАО "Уральская кузница" - обыкн.</span>
+                <span class="leader-ticker">URKZ</span>
+                <span class="leader-price">33 900 RUB</span>
+              </div>
+              <span class="leader-change positive">+7,28%</span>
+            </div>
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">НПО Наука - обыкн.</span>
+                <span class="leader-ticker">NAUK</span>
+                <span class="leader-price">502,5 RUB</span>
+              </div>
+              <span class="leader-change positive">+6,12%</span>
+            </div>
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">АО "Волга-флот" - обыкн.</span>
+                <span class="leader-ticker">VFLT</span>
+                <span class="leader-price">2 597 RUB</span>
+              </div>
+              <span class="leader-change positive">+3,92%</span>
+            </div>
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">ОАО АК "Уральск авиалинии" - обыкн.</span>
+                <span class="leader-ticker">URAL</span>
+                <span class="leader-price">259 000 RUB</span>
+              </div>
+              <span class="leader-change positive">+3,60%</span>
+            </div>
           </div>
-          <span class="leader-change positive">+21,97%</span>
+          <a href="#" class="show-all">Все акции с большим ростом за сутки ></a>
         </div>
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">ПАО "МЭСС" - обыкн.</span>
-            <span class="leader-ticker">MESS</span>
-            <span class="leader-price">0,089979 RUB</span>
+
+        <!-- Блок "Лидеры падения" -->
+        <div class="leaders-block">
+          <div class="leaders-list">
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">Группа ЛСР ПАО - обыкн.</span>
+                <span class="leader-ticker">LSRG</span>
+                <span class="leader-price">780,8 RUB</span>
+              </div>
+              <span class="leader-change negative">-10,23%</span>
+            </div>
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">AO "Газэнергосервис" - обыкн.</span>
+                <span class="leader-ticker">GZES</span>
+                <span class="leader-price">3608 RUB</span>
+              </div>
+              <span class="leader-change negative">-9,80%</span>
+            </div>
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">AO "РЭС" - обыкн.</span>
+                <span class="leader-ticker">RAES</span>
+                <span class="leader-price">112,75 RUB</span>
+              </div>
+              <span class="leader-change negative">-6,78%</span>
+            </div>
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">"Т Плюс" ПАО ао.</span>
+                <span class="leader-ticker">VTGK</span>
+                <span class="leader-price">1,2950 RUB</span>
+              </div>
+              <span class="leader-change negative">-5,72%</span>
+            </div>
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">VEON Ltd. ORD SHS</span>
+                <span class="leader-ticker">VEON-RX</span>
+                <span class="leader-price">85,75 RUB</span>
+              </div>
+              <span class="leader-change negative">-4,56%</span>
+            </div>
+            <div class="leader-item">
+              <div class="leader-info">
+                <span class="leader-name">ПАО "ГТМ" - обыкн.</span>
+                <span class="leader-ticker">GTRK</span>
+                <span class="leader-price">227,4 RUB</span>
+              </div>
+              <span class="leader-change negative">-5,37%</span>
+            </div>
           </div>
-          <span class="leader-change positive">+9,73%</span>
-        </div>
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">ПАО "Уральская кузница" - обыкн.</span>
-            <span class="leader-ticker">URKZ</span>
-            <span class="leader-price">33 900 RUB</span>
-          </div>
-          <span class="leader-change positive">+7,28%</span>
-        </div>
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">НПО Наука - обыкн.</span>
-            <span class="leader-ticker">NAUK</span>
-            <span class="leader-price">502,5 RUB</span>
-          </div>
-          <span class="leader-change positive">+6,12%</span>
-        </div>
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">АО "Волга-флот" - обыкн.</span>
-            <span class="leader-ticker">VFLT</span>
-            <span class="leader-price">2 597 RUB</span>
-          </div>
-          <span class="leader-change positive">+3,92%</span>
-        </div>
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">ОАО АК "Уральск авиалинии" - обыкн.</span>
-            <span class="leader-ticker">URAL</span>
-            <span class="leader-price">259 000 RUB</span>
-          </div>
-          <span class="leader-change positive">+3,60%</span>
+          <a href="#" class="show-all">Все акции с большим падением за сутки ></a>
         </div>
       </div>
-      <a href="#" class="show-all">Все акции с большим ростом за сутки ></a>
-    </div>
-
-    <!-- Блок "Лидеры падения" -->
-    <div class="leaders-block">
-      <div class="leaders-list">
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">Группа ЛСР ПАО - обыкн.</span>
-            <span class="leader-ticker">LSRG</span>
-            <span class="leader-price">780,8 RUB</span>
-          </div>
-          <span class="leader-change negative">-10,23%</span>
-        </div>
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">AO "Газэнергосервис" - обыкн.</span>
-            <span class="leader-ticker">GZES</span>
-            <span class="leader-price">3608 RUB</span>
-          </div>
-          <span class="leader-change negative">-9,80%</span>
-        </div>
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">AO "РЭС" - обыкн.</span>
-            <span class="leader-ticker">RAES</span>
-            <span class="leader-price">112,75 RUB</span>
-          </div>
-          <span class="leader-change negative">-6,78%</span>
-        </div>
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">"Т Плюс" ПАО ао.</span>
-            <span class="leader-ticker">VTGK</span>
-            <span class="leader-price">1,2950 RUB</span>
-          </div>
-          <span class="leader-change negative">-5,72%</span>
-        </div>
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">VEON Ltd. ORD SHS</span>
-            <span class="leader-ticker">VEON-RX</span>
-            <span class="leader-price">85,75 RUB</span>
-          </div>
-          <span class="leader-change negative">-4,56%</span>
-        </div>
-        <div class="leader-item">
-          <div class="leader-info">
-            <span class="leader-name">ПАО "ГТМ" - обыкн.</span>
-            <span class="leader-ticker">GTRK</span>
-            <span class="leader-price">227,4 RUB</span>
-          </div>
-          <span class="leader-change negative">-5,37%</span>
-        </div>
-      </div>
-      <a href="#" class="show-all">Все акции с большим падением за сутки ></a>
-    </div>
-  </div>
-</section>
-
+    </section>
   </main>
+
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script>
+    // Сохраняем ссылку на текущий виджет
+    let currentChart = null;
+    
+    // Функция для создания/обновления графика
+    function createChart(symbol) {
+      // Удаляем старый график, если он существует
+      if (currentChart) {
+        currentChart.remove();
+        document.getElementById('tradingview_chart').innerHTML = '';
+      }
+      
+      // Создаем новый график
+      currentChart = new TradingView.widget({
+        "width": "100%",
+        "height": 400,
+        "symbol": symbol,
+        "interval": "D",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "ru",
+        "toolbar_bg": "#1e1e1e",
+        "enable_publishing": false,
+        "hide_top_toolbar": true,
+        "withdateranges": false,
+        "container_id": "tradingview_chart"
+      });
+    }
+    
+    // Обработчик для карточек индексов
+    document.querySelectorAll('.market-indexes .index-card').forEach(card => {
+      card.addEventListener('click', function() {
+        // Удаляем класс active у всех карточек
+        document.querySelectorAll('.market-indexes .index-card').forEach(c => {
+          c.classList.remove('active');
+        });
+        
+        // Добавляем класс active к текущей карточке
+        this.classList.add('active');
+        
+        // Получаем символ из атрибута data-symbol
+        const symbol = this.getAttribute('data-symbol');
+        
+        // Обновляем график
+        createChart(symbol);
+      });
+    });
+    
+    // Активируем первую карточку по умолчанию
+    document.querySelector('.market-indexes .index-card').classList.add('active');
+    createChart(document.querySelector('.market-indexes .index-card').getAttribute('data-symbol'));
+  </script>
 </body>
 </html>
