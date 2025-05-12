@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вход в аккаунт</title>
+  <title>Регистрация</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
@@ -43,7 +43,7 @@
       filter: brightness(0.3);
     }
 
-    .login-container {
+    .registration-container {
       position: relative;
       z-index: 2;
       background: #1e1e1e;
@@ -64,32 +64,11 @@
       color: #ffffff;
     }
 
-    .input-group {
-      width: 100%;
+    .social-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       margin-bottom: 20px;
-    }
-
-    .input-group label {
-      font-size: 14px;
-      color: #888;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      background: #2a2a2a;
-      color: #e0e0e0;
-      font-size: 15px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .input-group input:focus {
-      border-color: #3b82f6;
     }
 
     .btn {
@@ -100,20 +79,53 @@
       font-size: 15px;
       font-weight: 500;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s;
       color: #e0e0e0;
-      width: 100%;
-      margin: 10px 0;
-      transition: background-color 0.2s;
     }
 
     .btn:hover {
       background-color: #3a3a3a;
     }
 
+    .btn-google {
+      color: #e0e0e0;
+    }
+
+    .btn-email {
+      width: 100%;
+      color: #e0e0e0;
+      margin-top: 20px;
+    }
+
+    .separator {
+      display: flex;
+      align-items: center;
+      color: #888;
+      margin: 20px 0;
+      position: relative;
+      width: 100%;
+      text-align: center;
+    }
+
+    .separator::before,
+    .separator::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: #444;
+      margin: 0 10px;
+    }
+
     .footer-text {
       margin-top: 20px;
       color: #888;
       font-size: 14px;
+      position: relative;
+      width: 100%;
     }
 
     .footer-text a {
@@ -126,8 +138,14 @@
       text-decoration: underline;
     }
 
+    .footer-divider {
+      margin-top: 20px;
+      border-bottom: 1px solid #444;
+      width: 100%;
+    }
+
     .icon {
-      margin-right: 8px;
+      font-size: 18px;
     }
   </style>
 </head>
@@ -140,26 +158,41 @@
       </video>
     </div>
 
-    <div class="login-container">
-      <h1>Вход в аккаунт</h1>
+    <div class="registration-container">
+      <h1>Регистрация</h1>
+      <div class="social-buttons">
+        <button class="btn btn-google">
+          <i class="fab fa-google icon"></i>
+          Вход через аккаунт Google
+        </button>
 
-      <div class="input-group">
-        <label for="username">Имя пользователя</label>
-        <input type="text" id="username" placeholder="Введите имя пользователя">
+        <div style="display: flex; justify-content: center; gap: 15px; margin: 15px 0;">
+          <button class="btn" style="width: 50px; height: 50px; border-radius: 50%;">
+            <i class="fab fa-yahoo"></i>
+          </button>
+          <button class="btn" style="width: 50px; height: 50px; border-radius: 50%;">
+            <i class="fab fa-twitter"></i>
+          </button>
+          <button class="btn" style="width: 50px; height: 50px; border-radius: 50%;">
+            <i class="fab fa-linkedin-in"></i>
+          </button>
+          <button class="btn" style="width: 50px; height: 50px; border-radius: 50%;">
+            <i class="fab fa-apple"></i>
+          </button>
+        </div>
       </div>
 
-      <div class="input-group">
-        <label for="password">Пароль</label>
-        <input type="password" id="password" placeholder="Введите пароль">
-      </div>
+      <div class="separator">или</div>
 
-      <button class="btn">
-        <i class="fas fa-sign-in-alt icon"></i>
-        Войти
+      <button class="btn btn-email">
+        <i class="far fa-envelope icon"></i>
+        Продолжить с Email
       </button>
 
+      <div class="footer-divider"></div>
+
       <p class="footer-text">
-        Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+        Уже есть учетная запись? <a href="login.html">Войти</a>
       </p>
     </div>
   </div>
