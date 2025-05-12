@@ -43,5 +43,23 @@ module.exports = {
     WHERE id = $1 
     RETURNING id, username, email
   `,
-  
+  createBlacklistTable: `
+    CREATE TABLE IF NOT EXISTS token_blacklist (
+      id SERIAL PRIMARY KEY,
+      token TEXT UNIQUE NOT NULL,
+      expires_at TIMESTAMP NOT NULL
+    )
+  `,
+
+  addToBlacklist: `
+    INSERT INTO token_blacklist (token, expires_at)
+    VALUES ($1, $2)
+  `,
+
+  isTokenBlacklisted: `
+    SELECT EXISTS(
+      SELECT 1 FROM token_blacklist 
+      WHERE token = $1
+    )
+  `,
 };

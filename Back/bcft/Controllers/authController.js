@@ -146,4 +146,24 @@ exports.deleteAccount = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+exports.logout = async (req, res) => {
+  try {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    const decoded = jwt.decode(token); // Декодируем без проверки подписи
+
+    if (!token || !decoded) {
+      return res.status(400).json({ error: 'Invalid token' });
+    }
+
+    // Добавляем токен в черный список
+    await pool.query(queries.addToBlacklist, [
+      token,
+      new Date(decoded.exp * 1000), // Время истечения токена
+    ]);
+
+    res.status(200).json({ message: 'Logged out successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
