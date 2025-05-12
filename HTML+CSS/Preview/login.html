@@ -1,42 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TradingView Login</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      color: #e0e0e0;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .video-section {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .video-section video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.3);
+    }
+
+    .registration-container {
+      position: relative;
+      z-index: 2;
+      background: #1e1e1e;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      width: 380px;
+      padding: 40px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0 0 30px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .social-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #2a2a2a;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s;
+      color: #e0e0e0;
+    }
+
+    .btn:hover {
+      background-color: #3a3a3a;
+    }
+
+    .btn-google {
+      color: #e0e0e0;
+    }
+
+    .btn-email {
+      width: 100%;
+      color: #e0e0e0;
+      margin-top: 20px;
+    }
+
+    .separator {
+      display: flex;
+      align-items: center;
+      color: #888;
+      margin: 20px 0;
+      position: relative;
+      width: 100%;
+      text-align: center;
+    }
+
+    .separator::before,
+    .separator::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: #444;
+      margin: 0 10px;
+    }
+
+    .footer-text {
+      margin-top: 20px;
+      color: #888;
+      font-size: 14px;
+      position: relative;
+      width: 100%;
+    }
+
+    .footer-text a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-divider {
+      margin-top: 20px;
+      border-bottom: 1px solid #444;
+      width: 100%;
+    }
+
+    .icon {
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <div class="left">
-      <video autoplay muted loop playsinline>
-        <source src="https://static.tradingview.com/static/bundles/desktop.ae5806f21cba705aa854.webm" type="video/webm" />
-        Your browser does not support the video tag.
+    <div class="video-section">
+      <video autoplay muted loop>
+        <source src="https://static.tradingview.com/static/bundles/desktop.hvc1.a66ff2509da830c3e648.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
       </video>
-      <div class="quote">
-        <h1>Look first /<br>Then leap.</h1>
-        <p>Alex Honnold<br><span class="tv-athlete">TV Athlete</span></p>
-      </div>
     </div>
 
-    <div class="right">
-      <div class="login-box">
-        <img src="./images/FinTrack_Logo.png" alt="FinTrackLogo" class="logo" />
-        <h2>Sign up</h2>
-        <div class="social-buttons">
-          <button class="btn google">Sign in with Google</button>
-          <div class="icon-row">
-            <button class="icon facebook"></button>
-            <button class="icon x"></button>
-            <button class="icon yahoo"></button>
-            <button class="icon apple"></button>
-            <button class="icon linkedin"></button>
-          </div>
+    <div class="registration-container">
+      <h1>Регистрация</h1>
+      <div class="social-buttons">
+        <button class="btn btn-google">
+          <i class="fab fa-google icon"></i>
+          Вход через аккаунт Google
+        </button>
+
+        <div style="display: flex; justify-content: center; gap: 15px; margin: 15px 0;">
+          <button class="btn" style="width: 50px; height: 50px; border-radius: 50%;">
+            <i class="fab fa-yahoo"></i>
+          </button>
+          <button class="btn" style="width: 50px; height: 50px; border-radius: 50%;">
+            <i class="fab fa-twitter"></i>
+          </button>
+          <button class="btn" style="width: 50px; height: 50px; border-radius: 50%;">
+            <i class="fab fa-linkedin-in"></i>
+          </button>
+          <button class="btn" style="width: 50px; height: 50px; border-radius: 50%;">
+            <i class="fab fa-apple"></i>
+          </button>
         </div>
-        <div class="separator"><span>or</span></div>
-        <button class="btn email">Email</button>
-        <p class="signin-link">Already have an account? <a href="#">Sign in</a></p>
       </div>
+
+      <div class="separator">или</div>
+
+      <button class="btn btn-email">
+        <i class="far fa-envelope icon"></i>
+        Продолжить с Email
+      </button>
+
+      <div class="footer-divider"></div>
+
+      <p class="footer-text">
+        Уже есть учетная запись? <a href="#">Войти</a>
+      </p>
     </div>
   </div>
 </body>
