@@ -17,6 +17,12 @@ router.use(authMiddleware);
 router.get('/me', authController.getMe);
 router.patch('/change-password', authController.changePassword);
 
-module.exports = router;
+router.use(authMiddleware);
+
+router.get('/me', authController.getMe);
+router.patch('/change-username', authController.changeUsername);
+router.patch('/change-password', authController.changePassword);
+router.delete('/delete-account', authController.deleteAccount); // Новый роут
+
 
 module.exports = router;

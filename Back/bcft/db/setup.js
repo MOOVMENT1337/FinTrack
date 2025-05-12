@@ -37,5 +37,11 @@ module.exports = {
   findUserByEmail: `
     SELECT * FROM users 
     WHERE email = $1
-  `
+  `,
+  deleteUser: `
+    DELETE FROM users 
+    WHERE id = $1 
+    RETURNING id, username, email
+  `,
+  
 };

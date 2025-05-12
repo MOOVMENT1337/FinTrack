@@ -114,3 +114,36 @@ exports.changePassword = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.deleteAccount = async (req, res) => {
+  try {
+    const { password } = req.body;
+    const userId = req.user.id;
+
+    // 1. Получаем текущего пользователя
+    const user = await pool.query(queries.findUserByIdWithPassword, [userId]);
+    if (user.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // 2. Проверяем пароль
+    const isMatch = await bcrypt.compare(password, user.rows[0].password);
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Incorrect password' });
+    }
+
+    // 3. Удаляем аккаунт
+    const deletedUser = await pool.query(queries.deleteUser, [userId]);
+
+    // 4. Опционально: удаляем связанные данные (если есть)
+    // await pool.query('DELETE FROM user_tokens WHERE user_id = $1', [userId]);
+
+    res.status(200).json({
+      message: 'Account deleted successfully',
+      deletedUser: deletedUser.rows[0]
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
