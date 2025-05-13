@@ -7,21 +7,37 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo">FinTrack</div>
-    <input type="text" class="search" placeholder="Поиск (Ctrl+K)" />
-    <nav class="nav-links">
-      <a href="#">Продукты</a>
-      <a href="#">Сообщество</a>
-      <a href="#">Рынки</a>
-      <a href="#">Брокеры</a>
-      <a href="#">Ещё</a>
-    </nav>
-    <div class="user">
-      <button class="subscribe-btn">Улучшить подписку<br /><span>30 дней бесплатно</span></button>
-      <div class="user-icon">M</div>
-    </div>
-  </header>
+   <div class="marketing-screen" id="marketingScreen">
+    <header class="marketing-header">
+      <div class="marketing-logo">FinTrack</div>
+      <input type="text" class="marketing-search" placeholder="Поиск (Ctrl+K)" />
+      <nav class="marketing-nav">
+        <a href="#">Продукты</a>
+        <a href="#">Сообщество</a>
+        <a href="#">Рынки</a>
+        <a href="#">Брокеры</a>
+        <a href="#">Ещё</a>
+      </nav>
+      <div class="marketing-header-right">
+        <span class="marketing-lang">🌐 RU</span>
+        <span class="marketing-user">👤</span>
+        <button class="marketing-register">Регистрация</button>
+      </div>
+    </header>
+
+    <main class="marketing-main">
+      <div class="marketing-content">
+        <h1><span>Look first /</span><br><span>Then leap.</span></h1>
+        <p class="marketing-subtitle">Сначала подготовка, затем действие. Так совершаются лучшие поступки.</p>
+        <button class="marketing-cta" id="showMarket">Зарегистрироваться бесплатно</button>
+        <p class="marketing-note">0 $ навсегда — и никакой банковской карты</p>
+      </div>
+      <div class="marketing-video">
+        <button class="marketing-watch-video">▶ Смотреть видео</button>
+        <p class="marketing-person">Лео Хоулдинг, путешественник</p>
+      </div>
+    </main>
+  </div>
 
   <main class="content">
     <h2>Обзор рынка›</h2>
