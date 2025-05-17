@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2021",
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,  // Важно для декораторов (@Entity, @Column)
+    "emitDecoratorMetadata": true,   // Важно для TypeORM
+    "skipLibCheck": true,
+    "outDir": "./dist",             // Папка для скомпилированных файлов
+    "rootDir": "./src"              // Папка с исходным кодом
+  },
+  "include": ["src/**/*.ts"],       // Какие файлы компилировать
+  "exclude": ["node_modules"]
+}
