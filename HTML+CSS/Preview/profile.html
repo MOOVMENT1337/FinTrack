@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Профиль пользователя - Финансы</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css" />
   <style>
     body {
       background-color: #000;
@@ -34,6 +35,19 @@
       background-color: #933;
       border-radius: 50%;
       font-size: 40px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+    }
+
+    .avatar1 {
+      width: 38px;
+      height: 38px;
+      background-color: #933;
+      border-radius: 50%;
+      font-size: 22px;
       color: #fff;
       display: flex;
       align-items: center;
@@ -136,10 +150,22 @@
 </head>
 <body>
 
-  <header>
-    <h1>Мои финансы</h1>
-    <button style="background:#933; padding: 8px 12px; border-radius: 5px;">Настройки профиля</button>
-  </header>
+    <header class="marketing-header">
+      <div class="marketing-logo">FinTrack</div>
+      <input type="text" class="marketing-search" placeholder="Поиск (Ctrl+K)" />
+      <nav class="marketing-nav">
+        <a href="#">Продукты</a>
+        <a href="#">Сообщество</a>
+        <a href="#">Рынки</a>
+        <a href="#">Брокеры</a>
+        <a href="#">Ещё</a>
+      </nav>
+      <div class="marketing-header-right">
+        <span class="marketing-lang">🌐 RU</span>
+        <span class="marketing-user">👤</span>
+            <div class="avatar1">V</div>
+      </div>
+    </header>
 
   <section class="profile">
     <div class="avatar">V</div>
@@ -154,7 +180,7 @@
   <div class="section-title">Мои финансы за этот месяц</div>
   <div id="balanceDisplay">Общий баланс: 0 ₽</div>
 
-  <canvas id="financeChart" height="300"></canvas>
+  <canvas id="financeChart" height="350"></canvas>
 
   <div class="buttons">
     <button class="income-btn" onclick="showModal('income')">Доход</button>
@@ -176,6 +202,154 @@
       <button onclick="submitAmount()">OK</button>
     </div>
   </div>
+
+    <footer class="footer">
+    <div class="footer-logo">
+        <!-- Здесь должен быть логотип -->
+        <img src="logo.png" alt="FinTrack Logo">
+    </div>
+    
+    <div class="footer-columns">
+        <div class="footer-column">
+            <h3>СУПЕРГРАФИКИ</h3>
+            <ul>
+                <li><a href="#" class="nav-link active">Акции</a></li>
+                <li><a href="#">ETF</a></li>
+                <li><a href="#">Облигации</a></li>
+                <li><a href="#" class="nav-link">Криптовалюты</a></li>
+                <li><a href="#">Криптопары</a></li>
+                <li><a href="#">CEX-пары</a></li>
+                <li><a href="#">DEX-пары</a></li>
+                <li><a href="#">Pine</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>ТЕПЛОВЫЕ КАРТЫ</h3>
+            <ul>
+                <li><a href="#" class="nav-link active">Акции</a></li>
+                <li><a href="#">ETF</a></li>
+                <li><a href="#" class="nav-link">Криптовалюты</a></li>
+            </ul>
+            
+            <h3>МАГРАДАРИ</h3>
+            <ul>
+                <li><a href="#">Экономические данные</a></li>
+                <li><a href="#">Прибыль</a></li>
+                <li><a href="#">Дивиденды</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>ДРУГИЕ ПРОДУКТЫ</h3>
+            <ul>
+                <li><a href="#">Опросы</a></li>
+                <li><a href="#">Лента новостей</a></li>
+                <li><a href="#">Pine Scripts</a></li>
+                <li><a href="#">Списки редакции</a></li>
+            </ul>
+            
+            <h3>ПРИЛОЖЕНИЯ</h3>
+            <ul>
+                <li><a href="#">Мобильное</a></li>
+                <li><a href="#">FinTrack Desktop</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>ВОЗМОЖНОСТИ</h3>
+            <ul>
+                <li><a href="#">Подписки</a></li>
+                <li><a href="#">Исторические данные</a></li>
+            </ul>
+            
+            <h3>СПЕЦИАЛЬНЫЕ ПРЕДЛОЖЕНИЯ</h3>
+            <ul>
+                <li><a href="#">Фьючерсы CME Group</a></li>
+                <li><a href="#">Фьючерсы Bitеx</a></li>
+                <li><a href="#">Набор данных по акциям США</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>О КОМПАНИИ</h3>
+            <ul>
+                <li><a href="#">Кто мы такие</a></li>
+                <li><a href="#">Наши принципы</a></li>
+                <li><a href="#">Наши амбассадоры</a></li>
+                <li><a href="#">Блог</a></li>
+                <li><a href="#">Карьера и вакансии</a></li>
+                <li><a href="#">Медиа-кит</a></li>
+            </ul>
+            
+            <h3>НАШ МЕРЧ</h3>
+            <ul>
+                <li><a href="#">Мерч FinTrack</a></li>
+                <li><a href="#">Карты Таро для трейдеров</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>ПОЛИТИКА И ОБЯЗАТЕЛЬСТВА</h3>
+            <ul>
+                <li><a href="#">Условия использования</a></li>
+                <li><a href="#">Отказ от ответственности</a></li>
+                <li><a href="#">Политика конфиденциальности</a></li>
+                <li><a href="#">Политика файлов cookie</a></li>
+                <li><a href="#">Положение о доступности</a></li>
+                <li><a href="#">Обязательства безопасности</a></li>
+                <li><a href="#">Страница статусов</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>СООБЩЕСТВО</h3>
+            <ul>
+                <li><a href="#">Социальная сеть</a></li>
+                <li><a href="#">Web of Love</a></li>
+                <li><a href="#">Пригласи друга</a></li>
+                <li><a href="#">Правила поведения</a></li>
+                <li><a href="#">Модераторы</a></li>
+            </ul>
+            
+            <h3>ИДЕИ</h3>
+            <ul>
+                <li><a href="#">Торговля</a></li>
+                <li><a href="#">Обучение</a></li>
+                <li><a href="#">Выбор редакции</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>PINE SCRIPT</h3>
+            <ul>
+                <li><a href="#">Индикаторы и стратегии</a></li>
+                <li><a href="#">Эксперты</a></li>
+                <li><a href="#">Фрилансеры</a></li>
+            </ul>
+            
+            <h3>ДЛЯ РАЗРАБОТЧИКОВ</h3>
+            <ul>
+                <li><a href="#">API</a></li>
+                <li><a href="#">Библиотеки графиков</a></li>
+                <li><a href="#">Lightweight Charts™</a></li>
+                <li><a href="#">Продвинутые графики</a></li>
+                <li><a href="#">Торговая платформа</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>ВОЗМОЖНОСТИ РОСТА</h3>
+            <ul>
+                <li><a href="#">Реклама</a></li>
+                <li><a href="#">Интеграция брокеров</a></li>
+                <li><a href="#">Партнёрская программа</a></li>
+                <li><a href="#">Образовательная программа</a></li>
+            </ul>
+        </div>
+    </div>
+  </footer>
+  <img src="https://static.tradingview.com/static/bundles/look-first-dark.8cb7462c584f600e8f31.svg" alt="Look First" class="footer-image" style="width: 100%; margin-top: 30px;">
 
   <script>
     const ctx = document.getElementById('financeChart').getContext('2d');
