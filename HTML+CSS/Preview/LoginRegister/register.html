@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Войдите в аккаунт</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="LRStyle.css"/>
+</head>
+<body>
+    <!-- Фоновое изображение -->
+    <div class="background"></div>
+    <!-- Видео-фон -->
+    <div class="video-bg">
+        <video autoplay muted loop>
+            <source src="https://static.tradingview.com/static/bundles/desktop.ae5806f21cba705aa854.webm" type="video/webm">
+        </video>
+    </div>
+    
+    <!-- Акцентное свечение за формой -->
+    <div class="accent-glow"></div>
+
+    <!-- Форма логина -->
+    <div class="wrapper">
+        <form action="">
+            <h1>Register</h1>
+            <div class="input-box">
+                <input type="text" placeholder="Username" required>
+                <i class="bx bxs-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="Password" required>
+                <i class="bx bxs-lock-alt"></i>
+            </div>
+            <button type="submit" class="btn">Register</button>
+
+            <div class="register-link">
+                <p>Have any account? <a href="login.html">Login</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
