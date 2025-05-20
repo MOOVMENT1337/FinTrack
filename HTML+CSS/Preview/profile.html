@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Профиль пользователя - Финансы</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
   <style>
     body {
       background-color: #000;
@@ -23,6 +23,11 @@
       border-bottom: 1px solid #333;
     }
 
+    main {
+      padding: 20px;
+      background: url(./images/swfv.jpg) no-repeat;
+    }
+
     .profile {
       display: flex;
       align-items: center;
@@ -32,14 +37,10 @@
     .avatar {
       width: 80px;
       height: 80px;
-      background-color: #933;
       border-radius: 50%;
-      font-size: 40px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      object-fit: cover;
       margin-right: 20px;
+      border: 2px solid #933;
     }
 
     .avatar1 {
@@ -166,47 +167,52 @@
             <div class="avatar1">V</div>
       </div>
     </header>
-
-  <section class="profile">
-    <div class="avatar">V</div>
-    <div class="profile-info">
-      <div><strong>USER</strong> <span style="color: #0f0;">● На сайте</span></div>
-      <div id="incomeDisplay">Доходы: 0₽</div>
-      <div id="expenseDisplay">Расходы: 0₽</div>
-      <div>С 22 апр. 2025 г.</div>
+    <main>
+    <section class="profile">
+      <!-- Заменяем букву на фото пользователя -->
+      <img src="./images/icon.jpg" alt="Фото пользователя" class="avatar">
+      <div class="profile-info">
+        <div><strong>USER</strong> <span style="color: #0f0;">● На сайте</span></div>
+        <div id="incomeDisplay">Доходы: 0₽</div>
+        <div id="expenseDisplay">Расходы: 0₽</div>
+        <div>С 22 апр. 2025 г.</div>
+      </div>
+    </section>
+    <div class="image_group"> 
+      <img src="">
     </div>
-  </section>
 
-  <div class="section-title">Мои финансы за этот месяц</div>
-  <div id="balanceDisplay">Общий баланс: 0 ₽</div>
+    <div class="section-title">Мои финансы за этот месяц</div>
+    <div id="balanceDisplay">Общий баланс: 0 ₽</div>
 
-  <canvas id="financeChart" height="350"></canvas>
+    <canvas id="financeChart" height="350"></canvas>
 
-  <div class="buttons">
-    <button class="income-btn" onclick="showModal('income')">Доход</button>
-    <button class="expense-btn" onclick="showModal('expense')">Расход</button>
-  </div>
-
-  <div class="currency-switcher">
-    <div>₽ RUB</div>
-    <div>$ EUR</div>
-    <div>€ USD</div>
-  </div>
-
-  <!-- Модальное окно -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <h3 id="modalTitle">Введите сумму</h3>
-      <input type="number" id="amountInput" placeholder="Сумма">
-      <br>
-      <button onclick="submitAmount()">OK</button>
+    <div class="buttons">
+      <button class="income-btn" onclick="showModal('income')">Доход</button>
+      <button class="expense-btn" onclick="showModal('expense')">Расход</button>
     </div>
-  </div>
+
+    <div class="currency-switcher">
+      <div>₽ RUB</div>
+      <div>$ EUR</div>
+      <div>€ USD</div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h3 id="modalTitle">Введите сумму</h3>
+        <input type="number" id="amountInput" placeholder="Сумма">
+        <br>
+        <button onclick="submitAmount()">OK</button>
+      </div>
+    </div>
+  </main>
 
     <footer class="footer">
     <div class="footer-logo">
         <!-- Здесь должен быть логотип -->
-        <img src="logo.png" alt="FinTrack Logo">
+        <img src="./images/FinTrack_Logo.png" alt="FinTrack Logo">
     </div>
     
     <div class="footer-columns">
