@@ -1,4 +1,15 @@
 {
+  "scripts": {
+      "prebuild": "rimraf dist",
+      "build": "nest build",
+      "start": "nest start",
+      "start:dev": "nest start --watch",
+      "start:debug": "nest start --debug --watch",
+      "test": "jest",
+      "test:watch": "jest --watch",
+      "migration:generate": "typeorm-ts-node-commonjs -d src/config/typeorm.config.ts migration:generate",
+      "migration:run": "typeorm-ts-node-commonjs -d src/config/typeorm.config.ts migration:run"
+    },
   "dependencies": {
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/passport": "^11.0.5",
