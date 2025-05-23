@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, BeforeInsert } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, BeforeInsert, OneToMany } from 'typeorm';
+import { Operation } from '../../finance/entities/operation.entity';
 import * as bcrypt from 'bcryptjs';
 
 @Entity('users')
@@ -22,6 +23,9 @@ export class User {
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
   }
+  
+  @OneToMany(() => Operation, (operation) => operation.user)
+  operations!: Operation[];
 
   async comparePassword(attempt: string): Promise<boolean> {
     return await bcrypt.compare(attempt, this.password);
