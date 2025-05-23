@@ -13,12 +13,12 @@
     <!-- Форма логина -->
     <div class="wrapper">
       <form @submit.prevent="handleLogin">
-        <h1>Login</h1>
+        <h1>Вход</h1>
         
         <div class="input-box">
           <input 
             type="text" 
-            placeholder="Username" 
+            placeholder="Имя пользователя" 
             v-model="username"
             required
           >
@@ -28,7 +28,7 @@
         <div class="input-box">
           <input 
             type="password" 
-            placeholder="Password" 
+            placeholder="Пароль" 
             v-model="password"
             required
           >
@@ -41,16 +41,16 @@
               type="checkbox" 
               v-model="rememberMe"
             > 
-            Remember me
+            Запомните меня
           </label>
-          <a href="#" @click.prevent="handleForgotPassword">Forgot password?</a>
+          <a href="#" @click.prevent="handleForgotPassword">Забыли пароль?</a>
         </div>
 
-        <button type="submit" class="btn">Login</button>
+        <button type="submit" class="btn">Войти</button>
 
         <div class="register-link">
-          <p>Don't have an account? 
-            <a href="#" @click.prevent="goToRegister">Register</a>
+          <p>Нет аккаунта?
+            <a href="#" @click.prevent="goToRegister">Зарегестрироваться</a>
           </p>
         </div>
       </form>

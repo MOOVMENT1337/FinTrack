@@ -18,7 +18,7 @@
         <div class="input-box">
           <input 
             type="text" 
-            placeholder="Username" 
+            placeholder="Имя пользователя" 
             v-model="username"
             required
           >
@@ -28,31 +28,25 @@
         <div class="input-box">
           <input 
             type="password" 
-            placeholder="Password" 
+            placeholder="Пароль" 
             v-model="password"
             required
           >
           <i class="bx bxs-lock-alt"></i>
         </div>
 
-        <div class="remember-forgot">
-          <label>
-            <input 
-              type="checkbox" 
-              v-model="rememberMe"
-            > 
-            Remember me
-          </label>
-          <a href="#" @click.prevent="handleForgotPassword">Forgot password?</a>
+        <div class="input-box">
+          <input 
+            type="password" 
+            placeholder="Повторите пароль" 
+            v-model="password"
+            required
+          >
+          <i class="bx bxs-lock-alt"></i>
         </div>
 
-        <button type="submit" class="btn">Login</button>
+        <button type="submit" class="btn">зарегистрироваться</button>
 
-        <div class="register-link">
-          <p>Don't have an account? 
-            <a href="#" @click.prevent="goToRegister">Register</a>
-          </p>
-        </div>
       </form>
     </div>
   </div>
@@ -167,7 +161,7 @@ html, body {
 
 .wrapper {
   width: 420px;
-  background: rgba(33, 123, 208, 0.85);
+  background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
