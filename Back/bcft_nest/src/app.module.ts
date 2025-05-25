@@ -2,10 +2,18 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './auth/entities/user.entity';
 import { FinanceModule } from './finance/finance.module';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
 
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        JWT_SECRET: Joi.string().required(),
+      }),
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
