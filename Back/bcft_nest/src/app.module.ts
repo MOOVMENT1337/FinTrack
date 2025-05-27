@@ -4,6 +4,8 @@ import { User } from './auth/entities/user.entity';
 import { FinanceModule } from './finance/finance.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { Operation } from './finance/entities/operation.entity';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -19,13 +21,14 @@ import * as Joi from 'joi';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'password',
-      database: 'test_db',
-      entities: [User],
+      password: 'admin',
+      database: 'postgres',
+      entities: [User, Operation],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([User]),
     FinanceModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
