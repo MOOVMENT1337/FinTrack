@@ -80,7 +80,7 @@ const handleLogin = async () => {
 
     if (response.data.access_token) {
       const userData = {
-        name: response.data.user.username,
+        username: response.data.user.username,
         registrationDate: response.data.user.createdAt,
         token: response.data.access_token,
       }
@@ -92,7 +92,7 @@ const handleLogin = async () => {
       }
 
       console.log('Успешный вход. Переход на /home...')
-      router.push('/home')
+      router.push('/app/home')
     } else {
       alert('Неверное имя пользователя или пароль')
     }

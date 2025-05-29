@@ -3,7 +3,10 @@
     <section class="profile">
       <img src="../assets/icons/avatar.png" alt="Фото пользователя" class="avatar" />
       <div class="profile-info">
-        <div><strong>USER</strong> <span style="color: #0f0;">● На сайте</span></div>
+        <div>
+          <strong>{{ user.username || 'USER' }}</strong>
+          <span style="color: #0f0;">● На сайте</span>
+        </div>
         <div id="incomeDisplay" :data-value="incomeTotal">Доходы: {{ incomeTotal }}₽</div>
         <div id="expenseDisplay" :data-value="expenseTotal">Расходы: {{ expenseTotal }}₽</div>
         <div>С {{ formatDate(user.registrationDate) }}</div>
@@ -15,15 +18,25 @@
 
     <canvas id="financeChart" height="350"></canvas>
 
-    <div class="buttons">
-      <button class="income-btn" @click="showModal('income')">Доход</button>
-      <button class="expense-btn" @click="showModal('expense')">Расход</button>
-    </div>
-
-    <div class="currency-switcher">
-      <div>₽ RUB</div>
-      <div>$ USD</div>
-      <div>€ EUR</div>
+    <div class="buttons-row">
+      <div class="buttons">
+        <button class="income-btn" @click="showModal('income')">Доход</button>
+        <button class="expense-btn" @click="showModal('expense')">Расход</button>
+      </div>
+      <div class="currency-switcher">
+        <div class="dropdown" @click="toggleDropdown">
+          {{ selectedCurrency.symbol }} {{ selectedCurrency.code }}
+          <div class="dropdown-menu" v-show="dropdownVisible">
+            <div 
+              v-for="currency in currencies" 
+              :key="currency.code"
+              @click.stop="changeCurrency(currency)"
+            >
+              {{ currency.symbol }} {{ currency.code }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="modal" class="modal" v-show="modalVisible" @click.self="modalVisible = false">
@@ -39,7 +52,10 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useUserStore } from '../stores/user'
 import Chart from 'chart.js/auto'
+
+const userStore = useUserStore()
 
 const labels = ref([])
 const balance = ref(0)
@@ -49,23 +65,55 @@ const currentType = ref('')
 const amountInput = ref(0)
 const modalVisible = ref(false)
 
-// Добавляем данные пользователя для примера
-const user = ref({
-  registrationDate: new Date('2024-01-15') // Пример даты регистрации
-})
+const dropdownVisible = ref(false)
+const currencies = [
+  { code: 'RUB', symbol: '₽', rate: 1 },
+  { code: 'USD', symbol: '$', rate: 0.011 },
+  { code: 'EUR', symbol: '€', rate: 0.01 },
+]
+const selectedCurrency = ref(currencies[0])
+
+const toggleDropdown = () => {
+  dropdownVisible.value = !dropdownVisible.value
+}
+
+const changeCurrency = (currency) => {
+  selectedCurrency.value = currency
+  dropdownVisible.value = false
+  updateCurrencyDisplays()
+}
+
+const username = computed(() => userStore.username)
+const registrationDate = ref('')
+
+const user = computed(() => ({
+  username: username.value,
+  registrationDate: registrationDate.value,
+}))
 
 const modalTitle = computed(() =>
   currentType.value === 'income' ? 'Введите доход' : 'Введите расход'
 )
 
-// Функция форматирования даты
 const formatDate = (date) => {
   if (!date) return 'Неизвестно'
   return new Intl.DateTimeFormat('ru-RU', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   }).format(new Date(date))
+}
+
+const loadUserData = async () => {
+  try {
+    const res = await fetch('/api/user')
+    if (!res.ok) throw new Error('Ошибка загрузки данных пользователя')
+    const data = await res.json()
+    registrationDate.value = data.createdAt || ''
+  } catch (error) {
+    console.error(error)
+    registrationDate.value = new Date().toISOString()
+  }
 }
 
 let financeChart
@@ -84,9 +132,13 @@ const updateChart = (amount, type) => {
   financeChart.data.datasets[0].data.push(balance.value)
   financeChart.update()
 
-  animateDisplay('balanceDisplay', balance.value)
-  animateDisplay('incomeDisplay', incomeTotal.value, 'Доходы: ', '₽')
-  animateDisplay('expenseDisplay', expenseTotal.value, 'Расходы: ', '₽')
+  updateCurrencyDisplays()
+}
+
+const updateCurrencyDisplays = () => {
+  animateDisplay('balanceDisplay', balance.value * selectedCurrency.value.rate, 'Общий баланс: ', ` ${selectedCurrency.value.symbol}`)
+  animateDisplay('incomeDisplay', incomeTotal.value * selectedCurrency.value.rate, 'Доходы: ', ` ${selectedCurrency.value.symbol}`)
+  animateDisplay('expenseDisplay', expenseTotal.value * selectedCurrency.value.rate, 'Расходы: ', ` ${selectedCurrency.value.symbol}`)
 }
 
 const showModal = (type) => {
@@ -105,7 +157,7 @@ const submitAmount = () => {
 const animateDisplay = (id, endValue, prefix = 'Общий баланс: ', suffix = ' ₽') => {
   const element = document.getElementById(id)
   if (!element) return
-  
+
   const startValue = parseFloat(element.dataset.value) || 0
   const duration = 800
   const startTime = performance.now()
@@ -123,58 +175,64 @@ const animateDisplay = (id, endValue, prefix = 'Общий баланс: ', suff
 }
 
 onMounted(() => {
+  loadUserData()
+
   const canvas = document.getElementById('financeChart')
   if (!canvas) return
-  
+
   const ctx = canvas.getContext('2d')
   financeChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: labels.value,
-      datasets: [{
-        label: 'Баланс',
-        data: [],
-        backgroundColor: function (context) {
-          const value = context.raw
-          return value >= 0 ? 'rgba(75, 192, 192, 0.6)' : 'rgba(255, 99, 132, 0.6)'
+      datasets: [
+        {
+          label: 'Баланс',
+          data: [],
+          backgroundColor: (context) => {
+            const value = context.raw
+            return value >= 0 ? 'rgba(75, 192, 192, 0.6)' : 'rgba(255, 99, 132, 0.6)'
+          },
+          borderColor: (context) => {
+            const value = context.raw
+            return value >= 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)'
+          },
+          borderWidth: 1,
         },
-        borderColor: function (context) {
-          const value = context.raw
-          return value >= 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)'
-        },
-        borderWidth: 1
-      }]
+      ],
     },
     options: {
       responsive: true,
-      scales: { 
-        y: { 
+      scales: {
+        y: {
           beginAtZero: true,
           ticks: {
-            color: '#fff'
+            color: '#fff',
           },
           grid: {
-            color: 'rgba(255, 255, 255, 0.1)'
-          }
+            color: 'rgba(255, 255, 255, 0.1)',
+          },
         },
         x: {
           ticks: {
-            color: '#fff'
+            color: '#fff',
           },
           grid: {
-            color: 'rgba(255, 255, 255, 0.1)'
-          }
-        }
+            color: 'rgba(255, 255, 255, 0.1)',
+          },
+        },
       },
       plugins: {
         legend: {
-          labels: { 
-            color: '#fff' 
-          }
-        }
-      }
-    }
+          labels: {
+            color: '#fff',
+          },
+        },
+      },
+    },
   })
+
+  updateCurrencyDisplays()
 })
 </script>
 
@@ -191,9 +249,18 @@ main {
   display: flex;
   align-items: center;
   padding: 20px 30px;
-  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 10px;
   margin-bottom: 20px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6), 
+              0 0 60px rgba(81, 92, 230, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #fff;
+  z-index: 2;
+  position: relative;
 }
 
 .avatar {
@@ -237,11 +304,20 @@ canvas {
   border-radius: 10px;
 }
 
-.buttons {
+/* Обёртка для кнопок и селектора */
+.buttons-row {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+/* Кнопки */
+.buttons {
+  display: flex;
+  gap: 10px;
 }
 
 button {
@@ -275,6 +351,7 @@ button:hover {
   background-color: #c00;
 }
 
+/* Модальное окно */
 .modal {
   display: flex;
   position: fixed;
@@ -328,22 +405,40 @@ button:hover {
   background-color: #555;
 }
 
+/* Выпадающий список валют */
 .currency-switcher {
-  position: absolute;
-  right: 30px;
-  top: 150px;
+  user-select: none;
+  cursor: pointer;
   text-align: right;
 }
 
-.currency-switcher div {
-  margin-bottom: 8px;
-  cursor: pointer;
-  padding: 5px 10px;
+.currency-switcher .dropdown {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  position: relative;
+  color: #fff;
+  white-space: nowrap;
 }
 
-.currency-switcher div:hover {
+.currency-switcher .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: rgba(34, 34, 34, 0.9);
+  border-radius: 5px;
+  margin-top: 5px;
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  min-width: 100%;
+}
+
+.currency-switcher .dropdown-menu div {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.currency-switcher .dropdown-menu div:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 </style>

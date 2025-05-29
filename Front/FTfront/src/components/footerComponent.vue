@@ -1,65 +1,204 @@
 <template>
   <footer class="footer">
     <div class="footer-logo">
-      <img src="../assets/FinTrack_Logo.png" alt="FinTrack Logo">
+      <img src="../assets/images/FinTrack_Logo.png" alt="FinTrack Logo" />
     </div>
-    
+
     <div class="footer-columns">
-      <!-- Все колонки футера -->
-      <div class="footer-column" v-for="(column, index) in footerColumns" :key="index">
-        <h3>{{ column.title }}</h3>
-        <ul>
-          <li v-for="(link, linkIndex) in column.links" :key="linkIndex">
-            <a :href="link.url" :class="{'nav-link': true, 'active': link.active}">{{ link.text }}</a>
-          </li>
-        </ul>
+      <div
+        v-for="(column, index) in footerContent"
+        :key="index"
+        class="footer-column"
+      >
+        <div v-for="section in column" :key="section.title">
+          <h3>{{ section.title }}</h3>
+          <ul>
+            <li v-for="item in section.items" :key="item.label">
+              <a :href="item.link" :class="item.active ? 'nav-link active' : ''">
+                {{ item.label }}
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-    <img src="https://static.tradingview.com/static/bundles/look-first-dark.8cb7462c584f600e8f31.svg" 
-         alt="Look First" 
-         class="footer-image">
   </footer>
+
+  <img
+    src="https://static.tradingview.com/static/bundles/look-first-dark.8cb7462c584f600e8f31.svg"
+    alt="Look First"
+    class="footer-image"
+    style="width: 100%; margin-top: 30px;"
+  />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-interface FooterLink {
-  text: string;
-  url: string;
+<script lang="ts" setup>
+interface FooterItem {
+  label: string;
+  link: string;
   active?: boolean;
 }
 
-interface FooterColumn {
+interface FooterSection {
   title: string;
-  links: FooterLink[];
+  items: FooterItem[];
 }
 
-export default defineComponent({
-  name: 'AppFooter',
-  setup() {
-    const footerColumns: FooterColumn[] = [
-      {
-        title: 'СУПЕРГРАФИКИ',
-        links: [
-          { text: 'Акции', url: '#', active: true },
-          { text: 'ETF', url: '#' },
-          { text: 'Облигации', url: '#' },
-          { text: 'Криптовалюты', url: '#', active: true },
-          { text: 'Криптопары', url: '#' },
-          { text: 'CEX-пары', url: '#' },
-          { text: 'DEX-пары', url: '#' },
-          { text: 'Pine', url: '#' }
-        ]
-      },
-      // Остальные колонки...
-    ];
-
-    return {
-      footerColumns
-    };
-  }
-});
+const footerContent: FooterSection[][] = [
+  [
+    {
+      title: 'СУПЕРГРАФИКИ',
+      items: [
+        { label: 'Акции', link: '#', active: true },
+        { label: 'ETF', link: '#' },
+        { label: 'Облигации', link: '#' },
+        { label: 'Криптовалюты', link: '#', active: true },
+        { label: 'Криптопары', link: '#' },
+        { label: 'CEX-пары', link: '#' },
+        { label: 'DEX-пары', link: '#' },
+        { label: 'Pine', link: '#' }
+      ]
+    }
+  ],
+  [
+    {
+      title: 'ТЕПЛОВЫЕ КАРТЫ',
+      items: [
+        { label: 'Акции', link: '#', active: true },
+        { label: 'ETF', link: '#' },
+        { label: 'Криптовалюты', link: '#', active: true }
+      ]
+    },
+    {
+      title: 'МАГРАДАРИ',
+      items: [
+        { label: 'Экономические данные', link: '#' },
+        { label: 'Прибыль', link: '#' },
+        { label: 'Дивиденды', link: '#' }
+      ]
+    }
+  ],
+  [
+    {
+      title: 'ДРУГИЕ ПРОДУКТЫ',
+      items: [
+        { label: 'Опросы', link: '#' },
+        { label: 'Лента новостей', link: '#' },
+        { label: 'Pine Scripts', link: '#' },
+        { label: 'Списки редакции', link: '#' }
+      ]
+    },
+    {
+      title: 'ПРИЛОЖЕНИЯ',
+      items: [
+        { label: 'Мобильное', link: '#' },
+        { label: 'FinTrack Desktop', link: '#' }
+      ]
+    }
+  ],
+  [
+    {
+      title: 'ВОЗМОЖНОСТИ',
+      items: [
+        { label: 'Подписки', link: '#' },
+        { label: 'Исторические данные', link: '#' }
+      ]
+    },
+    {
+      title: 'СПЕЦИАЛЬНЫЕ ПРЕДЛОЖЕНИЯ',
+      items: [
+        { label: 'Фьючерсы CME Group', link: '#' },
+        { label: 'Фьючерсы Bitеx', link: '#' },
+        { label: 'Набор данных по акциям США', link: '#' }
+      ]
+    }
+  ],
+  [
+    {
+      title: 'О КОМПАНИИ',
+      items: [
+        { label: 'Кто мы такие', link: '#' },
+        { label: 'Наши принципы', link: '#' },
+        { label: 'Наши амбассадоры', link: '#' },
+        { label: 'Блог', link: '#' },
+        { label: 'Карьера и вакансии', link: '#' },
+        { label: 'Медиа-кит', link: '#' }
+      ]
+    },
+    {
+      title: 'НАШ МЕРЧ',
+      items: [
+        { label: 'Мерч FinTrack', link: '#' },
+        { label: 'Карты Таро для трейдеров', link: '#' }
+      ]
+    }
+  ],
+  [
+    {
+      title: 'ПОЛИТИКА И ОБЯЗАТЕЛЬСТВА',
+      items: [
+        { label: 'Условия использования', link: '#' },
+        { label: 'Отказ от ответственности', link: '#' },
+        { label: 'Политика конфиденциальности', link: '#' },
+        { label: 'Политика файлов cookie', link: '#' },
+        { label: 'Положение о доступности', link: '#' },
+        { label: 'Обязательства безопасности', link: '#' },
+        { label: 'Страница статусов', link: '#' }
+      ]
+    }
+  ],
+  [
+    {
+      title: 'СООБЩЕСТВО',
+      items: [
+        { label: 'Социальная сеть', link: '#' },
+        { label: 'Web of Love', link: '#' },
+        { label: 'Пригласи друга', link: '#' },
+        { label: 'Правила поведения', link: '#' },
+        { label: 'Модераторы', link: '#' }
+      ]
+    },
+    {
+      title: 'ИДЕИ',
+      items: [
+        { label: 'Торговля', link: '#' },
+        { label: 'Обучение', link: '#' },
+        { label: 'Выбор редакции', link: '#' }
+      ]
+    }
+  ],
+  [
+    {
+      title: 'PINE SCRIPT',
+      items: [
+        { label: 'Индикаторы и стратегии', link: '#' },
+        { label: 'Эксперты', link: '#' },
+        { label: 'Фрилансеры', link: '#' }
+      ]
+    },
+    {
+      title: 'ДЛЯ РАЗРАБОТЧИКОВ',
+      items: [
+        { label: 'API', link: '#' },
+        { label: 'Библиотеки графиков', link: '#' },
+        { label: 'Lightweight Charts™', link: '#' },
+        { label: 'Продвинутые графики', link: '#' },
+        { label: 'Торговая платформа', link: '#' }
+      ]
+    }
+  ],
+  [
+    {
+      title: 'ВОЗМОЖНОСТИ РОСТА',
+      items: [
+        { label: 'Реклама', link: '#' },
+        { label: 'Интеграция брокеров', link: '#' },
+        { label: 'Партнёрская программа', link: '#' },
+        { label: 'Образовательная программа', link: '#' }
+      ]
+    }
+  ]
+];
 </script>
 
 <style scoped>
@@ -87,7 +226,8 @@ export default defineComponent({
   z-index: 0;
   opacity: 1;
   pointer-events: none;
-  filter: blur(1%);
+
+  filter: blur(1%); /* ✅ Сам эффект блюра */
   mask-image: linear-gradient(to left, transparent 0%, black 30%, black 70%, transparent 100%);
   -webkit-mask-image: linear-gradient(to left, transparent 0%, black 30%, black 70%, transparent 100%);
 }
@@ -96,9 +236,9 @@ export default defineComponent({
   content: "";
   position: absolute;
   top: 0;
-  right: 600px;
+  right: 600px; /* положение до начала ракеты */
   bottom: 0;
-  width: px;
+  width: px; /* больше ширина → мягче переход */
   background: linear-gradient(to right, #000 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0.2) 80%, transparent 100%);
   z-index: 1;
   pointer-events: none;
@@ -109,6 +249,19 @@ export default defineComponent({
 .footer-logo {
   position: relative;
   z-index: 2;
+}
+
+.footer-content {
+  position: relative;
+  z-index: 2;
+}
+
+.footer .footer-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
 }
 
 .footer-logo {
@@ -129,7 +282,7 @@ export default defineComponent({
 }
 
 .footer-column {
-  flex: 1 1 200px;
+    flex: 1 1 200px;
   min-width: 180px;
   margin: 10px;
   position: relative;
@@ -161,24 +314,19 @@ export default defineComponent({
   color: #ffffff;
 }
 
-.footer-image {
-  width: 100%;
-  margin-top: 30px;
-}
-
 @media (max-width: 768px) {
   .footer {
-    flex-direction: column;
+      flex-direction: column;
   }
   
   .footer-logo {
-    padding-right: 0;
-    margin-bottom: 30px;
+      padding-right: 0;
+      margin-bottom: 30px;
   }
   
   .footer-column {
-    min-width: 120px;
-    margin-bottom: 20px;
+      min-width: 120px;
+      margin-bottom: 20px;
   }
 }
 </style>

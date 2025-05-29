@@ -1,6 +1,6 @@
 <template>
   <header class="marketing-header">
-    <div class="marketing-logo">FinTrack</div>
+    <div class="marketing-logo" @click="goToHome" style="cursor: pointer;">FinTrack</div>
 
     <input 
       type="text" 
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useUserStore } from '../stores/user' // проверь путь
+import { useUserStore } from '../stores/user' // ✅ путь проверен, если файл действительно в src/stores/user.ts
 
 const router = useRouter()
 const store = useUserStore()
@@ -47,14 +47,20 @@ const isAuthenticated = computed(() => !!store.user?.token)
 
 // Переход в профиль
 const goToProfile = () => {
-  router.push({ name: 'Profile' }) // Убедись, что есть маршрут с name: 'Profile'
+  router.push({ name: 'Profile' })
 }
 
 // Переход на регистрацию
 const goToRegister = () => {
-  router.push({ name: 'Register' }) // Убедись, что есть маршрут с name: 'Register'
+  router.push({ name: 'Register' })
+}
+
+// Переход на главную при клике по логотипу
+const goToHome = () => {
+  router.push({ name: 'Home' })
 }
 </script>
+
 
 
 <style scoped>

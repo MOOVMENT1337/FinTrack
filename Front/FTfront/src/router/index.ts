@@ -1,6 +1,4 @@
-// src/router/index.ts
-import { createRouter, createWebHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
 import MainLayout from './layouts/mainlay.vue'
 import AuthLayout from './layouts/authlay.vue'
@@ -9,21 +7,39 @@ import HomePage from '../components/mainComponent.vue'
 import LoginComponent from '../components/LoginRegister/login.vue'
 import RegisterComponent from '../components/LoginRegister/registerComponent.vue'
 import ProfilePage from '../components/profile.vue'
+import NotFoundPage from '../components/404okak.vue' // <--- новый импорт
+
+import { useUserStore } from '../stores/user'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/login',
+    redirect: '/app/home',
   },
   {
-    path: '/',
+    path: '/auth',
+    component: AuthLayout,
+    children: [
+      {
+        path: 'login',
+        name: 'Login',
+        component: LoginComponent,
+      },
+      {
+        path: 'register',
+        name: 'Register',
+        component: RegisterComponent,
+      },
+    ],
+  },
+  {
+    path: '/app',
     component: MainLayout,
     children: [
       {
         path: 'home',
         name: 'Home',
         component: HomePage,
-        meta: { requiresAuth: true },
       },
       {
         path: 'profile',
@@ -34,11 +50,14 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/',
-    component: AuthLayout,
+    path: '/:pathMatch(.*)*',
+    component: MainLayout,
     children: [
-      { path: 'login', name: 'Login', component: LoginComponent },
-      { path: 'register', name: 'Register', component: RegisterComponent },
+      {
+        path: '',
+        name: 'NotFound',
+        component: NotFoundPage,
+      },
     ],
   },
 ]
@@ -47,9 +66,6 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 })
-
-// Navigation Guard для авторизации
-import { useUserStore } from '../stores/user'
 
 router.beforeEach((to, from, next) => {
   const store = useUserStore()

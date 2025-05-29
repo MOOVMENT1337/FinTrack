@@ -18,9 +18,6 @@
         </p>
       </div>
       <div class="marketing-video">
-        <button class="marketing-watch-video" @click="watchVideo">
-          ▶ Смотреть видео
-        </button>
         <p class="marketing-person">Лео Хоулдинг, путешественник</p>
       </div>
     </section>
@@ -148,7 +145,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 
 interface Tab {
   id: string
@@ -381,16 +378,66 @@ const playVideo = (videoId: string): void => {
   console.log('Play video:', videoId)
 }
 
-const selectIndex = (symbol: string): void => {
-  console.log('Selected index:', symbol)
-  // Здесь можно добавить логику для обновления графика TradingView
+// TradingView integration
+
+let currentChart: any = null
+
+function loadTradingViewScript(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if ((window as any).TradingView) {
+      resolve()
+      return
+    }
+    const script = document.createElement('script')
+    script.src = 'https://s3.tradingview.com/tv.js'
+    script.async = true
+    script.onload = () => resolve()
+    script.onerror = () => reject(new Error('Failed to load TradingView script'))
+    document.head.appendChild(script)
+  })
 }
 
-onMounted(() => {
-  // Инициализация TradingView виджета
-  console.log('Component mounted - TradingView can be initialized here')
+async function createChart(symbol: string) {
+  if (!(window as any).TradingView) {
+    await loadTradingViewScript()
+  }
+
+  if (currentChart) {
+    currentChart.remove?.()
+    const container = document.getElementById('tradingview_chart')
+    if (container) container.innerHTML = ''
+  }
+
+  currentChart = new (window as any).TradingView.widget({
+    width: '100%',
+    height: 400,
+    symbol,
+    interval: 'D',
+    timezone: 'Etc/UTC',
+    theme: 'dark',
+    style: '1',
+    locale: 'ru',
+    toolbar_bg: '#1e1e1e',
+    enable_publishing: false,
+    hide_top_toolbar: true,
+    withdateranges: false,
+    container_id: 'tradingview_chart',
+  })
+}
+
+const selectIndex = async (symbol: string): Promise<void> => {
+  activeTab.value = 'indexes'  // или другой нужный таб, если нужно
+  await createChart(symbol)
+}
+
+onMounted(async () => {
+  await loadTradingViewScript()
+  if (marketIndexes.length > 0) {
+    await createChart(marketIndexes[0].symbol)
+  }
 })
 </script>
+
 
 <style scoped>
 
@@ -398,18 +445,19 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow-y: auto; /* Разрешаем прокрутку для всего документа */
+  overflow-x: hidden;
 }
 
 main {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Главный контейнер на весь экран */
+  min-height: 100%;
 }
 
 /* Marketing Section */
 .marketing-main {
-  min-height: 100vh;
+  min-height: 91vh;
+  overflow: visible;
   position: relative;
   flex: 0 0 auto; /* Убираем flex-grow */
   display: flex;
@@ -418,7 +466,6 @@ main {
   justify-content: center;
   padding: 40px;
   background: url('https://static.tradingview.com/static/bundles/leo-look-768.1d2a29fb4592122e55cd.webp') no-repeat center center/cover;
-  height: 100vh; /* Фиксированная высота вместо min-height */
 }
 
 .marketing-content {

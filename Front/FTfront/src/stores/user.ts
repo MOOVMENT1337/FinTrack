@@ -1,29 +1,28 @@
 import { defineStore } from 'pinia'
-import { computed } from 'vue'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    name: '',
+    username: '',
     registrationDate: '',
     token: '',
     isAuthenticated: false,
   }),
   getters: {
     user: (state) => ({
-      name: state.name,
+      username: state.username,
       registrationDate: state.registrationDate,
       token: state.token,
     }),
   },
   actions: {
-    setUser(user: { name: string; registrationDate: string; token?: string }) {
-      this.name = user.name
+    setUser(user: { username: string; registrationDate: string; token?: string }) {
+      this.username = user.username
       this.registrationDate = user.registrationDate
       this.token = user.token || ''
       this.isAuthenticated = true
     },
     logout() {
-      this.name = ''
+      this.username = ''
       this.registrationDate = ''
       this.token = ''
       this.isAuthenticated = false
