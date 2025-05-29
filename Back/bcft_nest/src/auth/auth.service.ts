@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,7 @@ export class AuthService {
     });
 
     if (userExists) {
-      throw new Error('Username or email already exists');
+      throw new BadRequestException('Имя пользователя или email уже заняты');
     }
 
     const user = this.usersRepository.create({ username, email, password });
@@ -45,7 +46,7 @@ export class AuthService {
 
     const user = await this.usersRepository.findOne({ where: { username } });
     if (!user || !(await user.comparePassword(password))) {
-      throw new Error('Invalid credentials');
+      throw new BadRequestException('Неверное имя пользователя или пароль');
     }
 
     const payload = { username: user.username, sub: user.id };

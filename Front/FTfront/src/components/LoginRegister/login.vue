@@ -41,7 +41,7 @@
               type="checkbox" 
               v-model="rememberMe"
             > 
-            Запомните меня
+            Запомнить меня
           </label>
           <a href="#" @click.prevent="handleForgotPassword">Забыли пароль?</a>
         </div>
@@ -50,7 +50,7 @@
 
         <div class="register-link">
           <p>Нет аккаунта?
-            <a href="#" @click.prevent="goToRegister">Зарегестрироваться</a>
+            <a href="#" @click.prevent="goToRegister">Зарегистрироваться</a>
           </p>
         </div>
       </form>
@@ -61,29 +61,53 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
+import { useUserStore } from '../../stores/user' // путь проверь
 
-const router = useRouter() 
+const router = useRouter()
+const store = useUserStore()
 
-// Реактивные данные
-const username = ref<string>('')
-const password = ref<string>('')
-const rememberMe = ref<boolean>(false)
+const username = ref('')
+const password = ref('')
+const rememberMe = ref(false)
 
-// Методы
-const handleLogin = (): void => {
-  console.log('Login:', {
-    username: username.value,
-    password: password.value,
-    rememberMe: rememberMe.value
-  })
+const handleLogin = async () => {
+  try {
+    const response = await axios.post('http://localhost:3000/auth/login', {
+      username: username.value,
+      password: password.value,
+    })
+
+    if (response.data.access_token) {
+      const userData = {
+        name: response.data.user.username,
+        registrationDate: response.data.user.createdAt,
+        token: response.data.access_token,
+      }
+
+      store.setUser(userData)
+
+      if (rememberMe.value) {
+        localStorage.setItem('user', JSON.stringify(userData))
+      }
+
+      console.log('Успешный вход. Переход на /home...')
+      router.push('/home')
+    } else {
+      alert('Неверное имя пользователя или пароль')
+    }
+  } catch (error) {
+    console.error('Ошибка входа:', error)
+    alert('Ошибка сервера. Попробуйте позже.')
+  }
 }
 
-const handleForgotPassword = (): void => {
-  console.log('Forgot password clicked')
+const handleForgotPassword = () => {
+  alert('Функция в разработке')
 }
 
-const goToRegister = (): void => {
-  router.push({ name: 'Register' })
+const goToRegister = () => {
+  router.push({ name: 'Register' }) // убедись, что такой маршрут есть
 }
 </script>
 

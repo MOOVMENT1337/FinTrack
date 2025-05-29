@@ -1,14 +1,19 @@
 <script setup lang="ts">
-import LoginComponent from './components/LoginRegister/login.vue'
+import { onMounted } from 'vue'
+import { useUserStore } from './stores/user'
+
+onMounted(() => {
+  const store = useUserStore()
+  store.initializeFromLocalStorage()
+})
 </script>
 
 <template>
-  <LoginComponent />
-    <router-view />
+  <router-view />
 </template>
 
 <style>
-/* Глобальные стили для всего приложения */
+/* Глобальные стили */
 * {
   margin: 0;
   padding: 0;

@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="footer-logo">
-      <img src="logo.png" alt="FinTrack Logo">
+      <img src="../assets/FinTrack_Logo.png" alt="FinTrack Logo">
     </div>
     
     <div class="footer-columns">

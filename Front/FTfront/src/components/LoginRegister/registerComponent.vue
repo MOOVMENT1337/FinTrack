@@ -1,20 +1,13 @@
 <template>
-  <!-- Контейнер для центрирования -->
   <div class="main-container">
-    <!-- Фоновое изображение -->
     <div class="background"></div>
-    
-    <!-- Анимированный градиент вместо видео -->
     <div class="animated-bg"></div>
-    
-    <!-- Акцентное свечение за формой -->
     <div class="accent-glow"></div>
 
-    <!-- Форма логина -->
     <div class="wrapper">
-      <form @submit.prevent="handleLogin">
+      <form @submit.prevent="handleRegister">
         <h1>Регистрация</h1>
-        
+
         <div class="input-box">
           <input 
             type="text" 
@@ -24,7 +17,17 @@
           >
           <i class="bx bxs-user"></i>
         </div>
-        
+
+        <div class="input-box">
+          <input 
+            type="email" 
+            placeholder="Email" 
+            v-model="email"
+            required
+          >
+          <i class="bx bxs-envelope"></i>
+        </div>
+
         <div class="input-box">
           <input 
             type="password" 
@@ -39,14 +42,18 @@
           <input 
             type="password" 
             placeholder="Повторите пароль" 
-            v-model="password"
+            v-model="confirmPassword"
             required
           >
           <i class="bx bxs-lock-alt"></i>
         </div>
 
-        <button type="submit" class="btn">зарегистрироваться</button>
-
+        <button type="submit" class="btn">Зарегистрироваться</button>
+        <div class="register-link">
+          <p>Уже есть аккаунт?
+            <a href="#" @click.prevent="goToLogin">Войти</a>
+          </p>
+        </div>
       </form>
     </div>
   </div>
@@ -54,29 +61,40 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
-// Реактивные данные
 const username = ref<string>('')
+const email = ref<string>('')
 const password = ref<string>('')
-const rememberMe = ref<boolean>(false)
+const confirmPassword = ref<string>('')
 
-// Методы
-const handleLogin = (): void => {
-  console.log('Login:', {
-    username: username.value,
-    password: password.value,
-    rememberMe: rememberMe.value
-  })
+const router = useRouter()
+
+const handleRegister = async (): Promise<void> => {
+  if (password.value !== confirmPassword.value) {
+    alert('Пароли не совпадают')
+    return
+  }
+
+  try {
+    await axios.post('http://localhost:3000/auth/register', {
+      username: username.value,
+      email: email.value,
+      password: password.value,
+    })
+
+    router.push('/login')
+  } catch (error: any) {
+    console.error('Ошибка регистрации:', error)
+    alert(error.response?.data?.message || 'Ошибка при регистрации')
+  }
 }
-
-const handleForgotPassword = (): void => {
-  console.log('Forgot password clicked')
-}
-
-const goToRegister = (): void => {
-  console.log('Navigate to registration')
+const goToLogin = () => {
+  router.push({ name: 'Login' }) // убедись, что такой маршрут есть
 }
 </script>
+
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");

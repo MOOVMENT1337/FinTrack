@@ -393,15 +393,32 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; /* Разрешаем прокрутку для всего документа */
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Главный контейнер на весь экран */
+}
+
 /* Marketing Section */
 .marketing-main {
-  flex: 1;
+  min-height: 100vh;
+  position: relative;
+  flex: 0 0 auto; /* Убираем flex-grow */
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   justify-content: center;
   padding: 40px;
   background: url('https://static.tradingview.com/static/bundles/leo-look-768.1d2a29fb4592122e55cd.webp') no-repeat center center/cover;
-  min-height: 80vh;
+  height: 100vh; /* Фиксированная высота вместо min-height */
 }
 
 .marketing-content {
@@ -470,11 +487,15 @@ onMounted(() => {
 
 /* Content Section */
 .content {
+  flex: 1; /* Занимает оставшееся пространство */
   padding: 20px;
   max-width: 1400px;
   margin: 0 auto;
   background-color: #000;
   color: white;
+  width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .content h2 {

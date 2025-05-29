@@ -18,6 +18,7 @@ const jwt_1 = require("@nestjs/jwt");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entities/user.entity");
+const common_2 = require("@nestjs/common");
 let AuthService = class AuthService {
     constructor(usersRepository, jwtService) {
         this.usersRepository = usersRepository;
@@ -29,7 +30,7 @@ let AuthService = class AuthService {
             where: [{ username }, { email }]
         });
         if (userExists) {
-            throw new Error('Username or email already exists');
+            throw new common_2.BadRequestException('Имя пользователя или email уже заняты');
         }
         const user = this.usersRepository.create({ username, email, password });
         await this.usersRepository.save(user);
@@ -48,7 +49,7 @@ let AuthService = class AuthService {
         const { username, password } = loginDto;
         const user = await this.usersRepository.findOne({ where: { username } });
         if (!user || !(await user.comparePassword(password))) {
-            throw new Error('Invalid credentials');
+            throw new common_2.BadRequestException('Неверное имя пользователя или пароль');
         }
         const payload = { username: user.username, sub: user.id };
         return {

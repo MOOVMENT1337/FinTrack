@@ -1,11 +1,13 @@
 <template>
   <header class="marketing-header">
     <div class="marketing-logo">FinTrack</div>
+
     <input 
       type="text" 
       class="marketing-search" 
       placeholder="Поиск (Ctrl+K)" 
     />
+
     <nav class="marketing-nav">
       <a href="#">Продукты</a>
       <a href="#">Сообщество</a>
@@ -13,22 +15,47 @@
       <a href="#">Брокеры</a>
       <a href="#">Ещё</a>
     </nav>
+
     <div class="marketing-header-right">
       <span class="marketing-lang">🌐 RU</span>
       <span class="marketing-user">👤</span>
-      <button class="marketing-register" @click="handleRegister">
-        Регистрация
-      </button>
+
+      <template v-if="isAuthenticated">
+        <button class="marketing-register" @click="goToProfile">
+          В профиль
+        </button>
+      </template>
+      <template v-else>
+        <button class="marketing-register" @click="goToRegister">
+          Регистрация
+        </button>
+      </template>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-const handleRegister = (): void => {
-  // Логика регистрации
-  console.log('Регистрация clicked');
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '../stores/user' // проверь путь
+
+const router = useRouter()
+const store = useUserStore()
+
+// Проверка, авторизован ли пользователь
+const isAuthenticated = computed(() => !!store.user?.token)
+
+// Переход в профиль
+const goToProfile = () => {
+  router.push({ name: 'Profile' }) // Убедись, что есть маршрут с name: 'Profile'
+}
+
+// Переход на регистрацию
+const goToRegister = () => {
+  router.push({ name: 'Register' }) // Убедись, что есть маршрут с name: 'Register'
 }
 </script>
+
 
 <style scoped>
 .marketing-header {
