@@ -42,22 +42,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.User = exports.UserRole = void 0;
 const typeorm_1 = require("typeorm");
 const operation_entity_1 = require("../../finance/entities/operation.entity");
 const bcrypt = __importStar(require("bcryptjs"));
+var UserRole;
+(function (UserRole) {
+    UserRole["USER"] = "user";
+    UserRole["ADMIN"] = "admin";
+})(UserRole || (exports.UserRole = UserRole = {}));
 let User = class User {
     constructor() {
         this.username = "";
         this.email = "";
         this.password = "";
         this.createdAt = new Date(); // Автоматически инициализируется TypeORM
+        this.role = UserRole.USER;
     }
     async hashPassword() {
         this.password = await bcrypt.hash(this.password, 10);
     }
     async comparePassword(attempt) {
         return await bcrypt.compare(attempt, this.password);
+    }
+    isAdmin() {
+        return this.role === UserRole.ADMIN;
     }
 };
 exports.User = User;
@@ -81,6 +90,14 @@ __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], User.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: UserRole,
+        default: UserRole.USER,
+    }),
+    __metadata("design:type", String)
+], User.prototype, "role", void 0);
 __decorate([
     (0, typeorm_1.BeforeInsert)(),
     __metadata("design:type", Function),
