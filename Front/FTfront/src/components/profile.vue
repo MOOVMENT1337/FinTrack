@@ -4,14 +4,14 @@
       <img src="../assets/icons/avatar.png" alt="Фото пользователя" class="avatar" />
       <div class="profile-info">
         <div><strong>USER</strong> <span style="color: #0f0;">● На сайте</span></div>
-        <div id="incomeDisplay" :data-value="incomeTotal">Доходы: 0₽</div>
-        <div id="expenseDisplay" :data-value="expenseTotal">Расходы: 0₽</div>
+        <div id="incomeDisplay" :data-value="incomeTotal">Доходы: {{ incomeTotal }}₽</div>
+        <div id="expenseDisplay" :data-value="expenseTotal">Расходы: {{ expenseTotal }}₽</div>
         <div>С {{ formatDate(user.registrationDate) }}</div>
       </div>
     </section>
 
     <div class="section-title">Мои финансы за этот месяц</div>
-    <div id="balanceDisplay" :data-value="balance">Общий баланс: 0 ₽</div>
+    <div id="balanceDisplay" :data-value="balance">Общий баланс: {{ balance }} ₽</div>
 
     <canvas id="financeChart" height="350"></canvas>
 
@@ -22,8 +22,8 @@
 
     <div class="currency-switcher">
       <div>₽ RUB</div>
-      <div>$ EUR</div>
-      <div>€ USD</div>
+      <div>$ USD</div>
+      <div>€ EUR</div>
     </div>
 
     <div id="modal" class="modal" v-show="modalVisible" @click.self="modalVisible = false">
@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import Chart from 'chart.js/auto'
 
 const labels = ref([])
@@ -49,9 +49,24 @@ const currentType = ref('')
 const amountInput = ref(0)
 const modalVisible = ref(false)
 
+// Добавляем данные пользователя для примера
+const user = ref({
+  registrationDate: new Date('2024-01-15') // Пример даты регистрации
+})
+
 const modalTitle = computed(() =>
   currentType.value === 'income' ? 'Введите доход' : 'Введите расход'
 )
+
+// Функция форматирования даты
+const formatDate = (date) => {
+  if (!date) return 'Неизвестно'
+  return new Intl.DateTimeFormat('ru-RU', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }).format(new Date(date))
+}
 
 let financeChart
 
@@ -81,7 +96,7 @@ const showModal = (type) => {
 }
 
 const submitAmount = () => {
-  if (!isNaN(amountInput.value)) {
+  if (!isNaN(amountInput.value) && amountInput.value > 0) {
     updateChart(amountInput.value, currentType.value)
     modalVisible.value = false
   }
@@ -89,6 +104,8 @@ const submitAmount = () => {
 
 const animateDisplay = (id, endValue, prefix = 'Общий баланс: ', suffix = ' ₽') => {
   const element = document.getElementById(id)
+  if (!element) return
+  
   const startValue = parseFloat(element.dataset.value) || 0
   const duration = 800
   const startTime = performance.now()
@@ -106,7 +123,10 @@ const animateDisplay = (id, endValue, prefix = 'Общий баланс: ', suff
 }
 
 onMounted(() => {
-  const ctx = document.getElementById('financeChart').getContext('2d')
+  const canvas = document.getElementById('financeChart')
+  if (!canvas) return
+  
+  const ctx = canvas.getContext('2d')
   financeChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -117,14 +137,40 @@ onMounted(() => {
         backgroundColor: function (context) {
           const value = context.raw
           return value >= 0 ? 'rgba(75, 192, 192, 0.6)' : 'rgba(255, 99, 132, 0.6)'
-        }
+        },
+        borderColor: function (context) {
+          const value = context.raw
+          return value >= 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)'
+        },
+        borderWidth: 1
       }]
     },
     options: {
-      scales: { y: { beginAtZero: true } },
+      responsive: true,
+      scales: { 
+        y: { 
+          beginAtZero: true,
+          ticks: {
+            color: '#fff'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.1)'
+          }
+        },
+        x: {
+          ticks: {
+            color: '#fff'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.1)'
+          }
+        }
+      },
       plugins: {
         legend: {
-          labels: { color: '#fff' }
+          labels: { 
+            color: '#fff' 
+          }
         }
       }
     }
@@ -133,16 +179,21 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
 main {
   padding: 20px;
-  background: url('@/assets/images/swfv.jpg') no-repeat;
+  background: url('@/assets/images/swfv.jpg') no-repeat center;
+  background-size: cover;
+  min-height: 100vh;
+  color: #fff;
 }
 
 .profile {
   display: flex;
   align-items: center;
   padding: 20px 30px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 .avatar {
@@ -154,24 +205,34 @@ main {
   border: 2px solid #933;
 }
 
+.profile-info {
+  color: #fff;
+}
+
+.profile-info div {
+  margin-bottom: 5px;
+}
+
 .section-title {
   text-align: center;
   font-size: 24px;
   margin: 20px 0 10px;
+  color: #fff;
 }
 
 #balanceDisplay {
   text-align: center;
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   color: #0f0;
+  font-weight: bold;
 }
 
 canvas {
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   max-width: 800px;
-  background-color: #222;
+  background-color: rgba(34, 34, 34, 0.9);
   padding: 10px;
   border-radius: 10px;
 }
@@ -179,16 +240,21 @@ canvas {
 .buttons {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px 0;
+  gap: 20px;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 16px;
   border: none;
   border-radius: 8px;
-  margin: 0 10px;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
 }
 
 .income-btn {
@@ -196,15 +262,23 @@ button {
   color: #000;
 }
 
+.income-btn:hover {
+  background-color: #0c0;
+}
+
 .expense-btn {
   background-color: #f00;
   color: #fff;
 }
 
+.expense-btn:hover {
+  background-color: #c00;
+}
+
 .modal {
   display: flex;
   position: fixed;
-  z-index: 10;
+  z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
@@ -216,22 +290,42 @@ button {
 
 .modal-content {
   background-color: #222;
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 0 10px #fff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.modal-content h3 {
+  margin-bottom: 20px;
+  color: #fff;
 }
 
 .modal-content input {
-  padding: 10px;
+  padding: 12px;
   width: 200px;
   font-size: 16px;
-  margin: 10px 0;
+  margin: 10px 0 20px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+}
+
+.modal-content input:focus {
+  outline: none;
+  border-color: #0f0;
 }
 
 .modal-content button {
   background-color: #444;
   color: #fff;
+  min-width: 80px;
+}
+
+.modal-content button:hover {
+  background-color: #555;
 }
 
 .currency-switcher {
@@ -242,7 +336,14 @@ button {
 }
 
 .currency-switcher div {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.currency-switcher div:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 </style>
