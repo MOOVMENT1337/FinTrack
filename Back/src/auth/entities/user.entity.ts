@@ -24,6 +24,9 @@ export class User {
   @CreateDateColumn()
   createdAt: Date = new Date(); // Автоматически инициализируется TypeORM
 
+   @Column({ default: 0 })
+  balance!: number;
+
   @Column({
     type: 'enum',
     enum: UserRole,

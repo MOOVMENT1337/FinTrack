@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const operation_entity_1 = require("./entities/operation.entity");
+const user_entity_1 = require("../auth/entities/user.entity");
 let FinanceService = class FinanceService {
     constructor(operationRepository) {
         this.operationRepository = operationRepository;
@@ -27,7 +28,17 @@ let FinanceService = class FinanceService {
             date: new Date(createOperationDto.date),
             user,
         });
-        return this.operationRepository.save(operation);
+        const savedOperation = await this.operationRepository.save(operation);
+        // Обновляем баланс
+        const amount = createOperationDto.amount;
+        if (createOperationDto.type === 'income') {
+            user.balance += amount;
+        }
+        else {
+            user.balance -= amount;
+        }
+        await this.operationRepository.manager.getRepository(user_entity_1.User).save(user);
+        return savedOperation;
     }
     async getUserOperations(userId) {
         return this.operationRepository.find({

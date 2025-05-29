@@ -91,6 +91,10 @@ __decorate([
     __metadata("design:type", Date)
 ], User.prototype, "createdAt", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], User.prototype, "balance", void 0);
+__decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
         enum: UserRole,

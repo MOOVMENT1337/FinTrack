@@ -18,9 +18,25 @@ export class FinanceService {
       date: new Date(createOperationDto.date),
       user,
     });
-    return this.operationRepository.save(operation);
-  }
 
+    const savedOperation = await this.operationRepository.save(operation);
+
+    // Обновляем баланс
+    const amount = createOperationDto.amount;
+    if (createOperationDto.type === 'income') {
+      user.balance += amount;
+    } else {
+      user.balance -= amount;
+    }
+
+    await this.operationRepository.manager.getRepository(User).save(user);
+
+    
+    return savedOperation;
+    
+
+  }
+  
   async getUserOperations(userId: number): Promise<Operation[]> {
     return this.operationRepository.find({
       where: { user: { id: userId } },
