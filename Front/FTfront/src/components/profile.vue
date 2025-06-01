@@ -11,6 +11,7 @@
         <div id="expenseDisplay" :data-value="expenseTotal">Расходы: {{ expenseTotal }}₽</div>
         <div>С {{ formatDate(user.registrationDate) }}</div>
       </div>
+      <button class="logout-btn" @click="logout">Выйти из аккаунта</button>
     </section>
 
     <div class="section-title">Мои финансы за этот месяц</div>
@@ -52,10 +53,12 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useUserStore } from '../stores/user'
+import { useUserStore } from '../stores/user.ts'
 import Chart from 'chart.js/auto'
+import { useRouter } from 'vue-router'
 
 const userStore = useUserStore()
+const router = useRouter()
 
 const labels = ref([])
 const balance = ref(0)
@@ -234,6 +237,11 @@ onMounted(() => {
 
   updateCurrencyDisplays()
 })
+
+const logout = () => {
+  userStore.logout()
+  router.push('/auth/login')
+}
 </script>
 
 <style scoped>

@@ -84,7 +84,7 @@ const handleRegister = async (): Promise<void> => {
       password: password.value,
     })
 
-    router.push('/login')
+    router.push('/auth/login')
   } catch (error: any) {
     console.error('Ошибка регистрации:', error)
     alert(error.response?.data?.message || 'Ошибка при регистрации')
