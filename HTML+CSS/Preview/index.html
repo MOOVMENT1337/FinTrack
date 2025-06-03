@@ -7,14 +7,119 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-   <div class="marketing-screen" id="marketingScreen">
+  <div class="marketing-screen" id="marketingScreen">
     <header class="marketing-header">
       <div class="marketing-logo">FinTrack</div>
       <input type="text" class="marketing-search" placeholder="Поиск (Ctrl+K)" />
       <nav class="marketing-nav">
-        <a href="#">Продукты</a>
-        <a href="#">Сообщество</a>
-        <a href="#">Рынки</a>
+        <!-- Меню "Продукты" -->
+        <div class="nav-dropdown">
+          <a href="#" class="nav-dropbtn">Продукты</a>
+          <div class="nav-dropdown-content">
+            <div class="dropdown-columns">
+              <!-- Первая колонка -->
+              <div class="dropdown-column">
+                <h3>Суперграфики</h3>
+                <p class="dropdown-subtitle">Центр управления анализом</p>
+                
+                <div class="dropdown-feature">
+                  <span class="feature-title">Скринеры</span>
+                  <span class="feature-desc">Находите что угодно простым сканированием</span>
+                </div>
+                
+                <div class="dropdown-feature">
+                  <span class="feature-title">Календари</span>
+                  <span class="feature-desc">Изучайте финансовые события</span>
+                </div>
+              </div>
+              
+              <!-- Вторая колонка -->
+              <div class="dropdown-column">
+                <h3>ИССЛЕДУЙТЕ РЫНКИ</h3>
+                
+                <div class="dropdown-feature">
+                  <span class="feature-title">Лента новостей</span>
+                  <span class="feature-desc">Что происходит прямо сейчас</span>
+                </div>
+                
+                <div class="dropdown-feature">
+                  <span class="feature-title">Кривые доходности</span>
+                  <span class="feature-desc">Динамика облигаций во времени</span>
+                </div>
+                
+                <div class="dropdown-feature">
+                  <span class="feature-title">Опционы</span>
+                  <span class="feature-desc">Создавайте лучшие стратегии</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Меню "Сообщество" -->
+        <div class="nav-dropdown">
+          <a href="#" class="nav-dropbtn">Сообщество</a>
+          <div class="nav-dropdown-content community-dropdown">
+            <div class="dropdown-column">
+              <h3>Сообщество</h3>
+              
+              <div class="community-feature">
+                <span class="feature-title">Торговые идеи</span>
+                <span class="feature-desc">Найдите вдохновение для будущих сделок</span>
+              </div>
+              
+              <div class="community-divider"></div>
+              
+              <div class="community-feature">
+                <span class="feature-title">Индикаторы и стратегии</span>
+                <span class="feature-desc">Используйте Pine Script® для продвинутого анализа</span>
+              </div>
+              
+              <div class="community-divider"></div>
+              
+              <div class="community-feature highlight">
+                <span class="feature-title">The Leap</span>
+                <span class="feature-desc">Время побороться за долю в призовом фонде $50 000 и продления подписок</span>
+              </div>
+            </div>
+          </div>
+      </div>
+      
+      <!-- Новое меню "Рынки" -->
+      <div class="nav-dropdown">
+        <a href="#" class="nav-dropbtn">Рынки</a>
+        <div class="nav-dropdown-content markets-dropdown">
+          <div class="dropdown-column">
+            <h3>Рынки</h3>
+            
+            <div class="market-feature">
+              <span class="feature-title">Акции</span>
+              <span class="feature-desc">Торговля акциями компаний</span>
+            </div>
+            
+            <div class="market-divider"></div>
+            
+            <div class="market-feature">
+              <span class="feature-title">Облигации</span>
+              <span class="feature-desc">Долговые инструменты</span>
+            </div>
+            
+            <div class="market-divider"></div>
+            
+            <div class="market-feature">
+              <span class="feature-title">Фьючерсы</span>
+              <span class="feature-desc">Производные финансовые инструменты</span>
+            </div>
+            
+            <div class="market-divider"></div>
+            
+            <div class="market-feature highlight">
+              <span class="feature-title">Криптовалюты</span>
+              <span class="feature-desc">Цифровые активы и токены</span>
+            </div>
+          </div>
+        </div>
+      </div>
         <a href="#">Брокеры</a>
         <a href="#">Ещё</a>
       </nav>
@@ -23,6 +128,10 @@
         <span class="marketing-user">👤</span>
         <button class="marketing-register">В профиль</button>
       </div>
+    </header>
+  </div>
+    </header>
+    </div>
     </header>
 
     <main class="marketing-main">

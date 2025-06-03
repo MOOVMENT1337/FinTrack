@@ -1189,3 +1189,277 @@ h2 {
   .show-all-news:hover {
     color: #3e8e41;
   }
+
+/* Основные стили шапки */
+.marketing-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: #121212;
+  color: white;
+  position: relative;
+  z-index: 1000;
+}
+
+.marketing-nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  position: relative;
+}
+
+.marketing-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 5px 0;
+  transition: color 0.3s;
+}
+
+.marketing-nav a:hover {
+  color: #00c6ff;
+}
+
+/* Стили выпадающего меню */
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-dropbtn {
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 0;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1e1e1e;
+  width: 600px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1001;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 10px;
+  animation: fadeIn 0.3s;
+}
+
+.nav-dropdown:hover .nav-dropdown-content {
+  display: block;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Стили содержимого меню */
+.dropdown-columns {
+  display: flex;
+  gap: 30px;
+}
+
+.dropdown-column {
+  flex: 1;
+}
+
+.dropdown-column h3 {
+  color: #00c6ff;
+  margin-bottom: 15px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.dropdown-subtitle {
+  color: #aaa;
+  margin-bottom: 15px;
+  font-size: 14px;
+  display: block;
+}
+
+.dropdown-feature {
+  margin-bottom: 15px;
+  padding: 8px 0;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.feature-title {
+  display: block;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.feature-desc {
+  display: block;
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Дополнительные стили для красоты */
+.marketing-search {
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: none;
+  background: #2a2a2a;
+  color: white;
+  outline: none;
+}
+
+.marketing-register {
+  background: #00c6ff;
+  color: #121212;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+/* Стили для меню "Сообщество" */
+.community-dropdown {
+  width: 320px !important;
+  padding: 15px !important;
+}
+
+.community-feature {
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.community-feature:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.community-feature.highlight {
+  background: rgba(0, 198, 255, 0.08);
+  border-radius: 6px;
+  padding: 12px;
+  margin: 5px -12px;
+}
+
+.community-divider {
+  height: 1px;
+  background: #2a2a2a;
+  margin: 8px 0;
+}
+
+.community-dropdown .feature-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.community-dropdown .feature-desc {
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.4;
+  display: block;
+}
+
+.community-dropdown .highlight .feature-title {
+  color: #00c6ff;
+}
+
+.community-dropdown h3 {
+  color: #00c6ff;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #2a2a2a;
+  font-size: 16px;
+}
+
+/* Общие стили для всех выпадающих меню */
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1e1e1e;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1001;
+  border-radius: 8px;
+  margin-top: 10px;
+  animation: fadeIn 0.3s;
+}
+
+.nav-dropdown:hover .nav-dropdown-content {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+/* Стили для меню "Рынки" */
+.markets-dropdown {
+  width: 300px !important;
+  padding: 15px !important;
+}
+
+.market-feature {
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.market-feature:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.market-feature.highlight {
+  background: rgba(0, 198, 255, 0.08);
+  border-radius: 6px;
+  padding: 12px;
+  margin: 0 -12px;
+}
+
+.market-divider {
+  height: 1px;
+  background: #2a2a2a;
+  margin: 10px 0;
+}
+
+.markets-dropdown .feature-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.markets-dropdown .feature-desc {
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.4;
+  display: block;
+}
+
+.markets-dropdown .highlight .feature-title {
+  color: #00c6ff;
+}
+
+.markets-dropdown h3 {
+  color: #00c6ff;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #2a2a2a;
+  font-size: 16px;
+}
