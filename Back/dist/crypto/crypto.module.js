@@ -6,30 +6,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthModule = void 0;
+exports.CryptoModule = void 0;
 const common_1 = require("@nestjs/common");
-const jwt_1 = require("@nestjs/jwt");
 const typeorm_1 = require("@nestjs/typeorm");
-const user_entity_1 = require("./entities/user.entity");
+const crypto_service_1 = require("./crypto.service");
+const crypto_controller_1 = require("./crypto.controller");
+const user_entity_1 = require("../auth/entities/user.entity");
 const bitcoin_entity_1 = require("../crypto/entities/bitcoin.entity");
 const ethereum_entity_1 = require("../crypto/entities/ethereum.entity");
-const auth_service_1 = require("./auth.service");
-const auth_controller_1 = require("./auth.controller");
-const jwt_strategy_1 = require("./strategies/jwt.strategy");
-const constants_1 = require("./constants");
-let AuthModule = class AuthModule {
+let CryptoModule = class CryptoModule {
 };
-exports.AuthModule = AuthModule;
-exports.AuthModule = AuthModule = __decorate([
+exports.CryptoModule = CryptoModule;
+exports.CryptoModule = CryptoModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, bitcoin_entity_1.BitcoinWallet, ethereum_entity_1.EthereumWallet]),
-            jwt_1.JwtModule.register({
-                secret: constants_1.jwtConstants.secret,
-                signOptions: { expiresIn: '1d' },
-            }),
         ],
-        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
-        controllers: [auth_controller_1.AuthController],
+        providers: [crypto_service_1.CryptoService],
+        controllers: [crypto_controller_1.CryptoController],
     })
-], AuthModule);
+], CryptoModule);

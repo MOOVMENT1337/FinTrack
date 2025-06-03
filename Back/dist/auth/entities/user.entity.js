@@ -45,6 +45,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = exports.UserRole = void 0;
 const typeorm_1 = require("typeorm");
 const operation_entity_1 = require("../../finance/entities/operation.entity");
+const bitcoin_entity_1 = require("../../crypto/entities/bitcoin.entity");
+const ethereum_entity_1 = require("../../crypto/entities/ethereum.entity");
 const bcrypt = __importStar(require("bcryptjs"));
 var UserRole;
 (function (UserRole) {
@@ -112,6 +114,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => operation_entity_1.Operation, (operation) => operation.user),
     __metadata("design:type", Array)
 ], User.prototype, "operations", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => bitcoin_entity_1.BitcoinWallet, (bitcoinWallet) => bitcoinWallet.user),
+    __metadata("design:type", Array)
+], User.prototype, "bitcoinWallets", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => ethereum_entity_1.EthereumWallet, (ethereumWallet) => ethereumWallet.user),
+    __metadata("design:type", Array)
+], User.prototype, "ethereumWallets", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)('users')
 ], User);

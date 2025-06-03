@@ -48,6 +48,9 @@ const config_1 = require("@nestjs/config");
 const Joi = __importStar(require("joi"));
 const operation_entity_1 = require("./finance/entities/operation.entity");
 const auth_module_1 = require("./auth/auth.module");
+const bitcoin_entity_1 = require("./crypto/entities/bitcoin.entity");
+const ethereum_entity_1 = require("./crypto/entities/ethereum.entity");
+const crypto_module_1 = require("./crypto/crypto.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -65,14 +68,15 @@ exports.AppModule = AppModule = __decorate([
                 host: 'localhost',
                 port: 5432,
                 username: 'postgres',
-                password: '12345',
+                password: '110',
                 database: 'postgres',
-                entities: [user_entity_1.User, operation_entity_1.Operation],
+                entities: [user_entity_1.User, operation_entity_1.Operation, bitcoin_entity_1.BitcoinWallet, ethereum_entity_1.EthereumWallet],
                 synchronize: true,
             }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
             finance_module_1.FinanceModule,
             auth_module_1.AuthModule,
+            crypto_module_1.CryptoModule
         ],
     })
 ], AppModule);
