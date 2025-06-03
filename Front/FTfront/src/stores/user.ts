@@ -30,8 +30,14 @@ export const useUserStore = defineStore('user', {
       this.token = user.token
       this.isAuthenticated = true
 
-      // сохраняем ВСЕ данные
-      localStorage.setItem('user', JSON.stringify(user))
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          username: user.username,
+          registrationDate: user.registrationDate,
+          token: user.token,
+        }),
+      )
     },
 
     logout() {
@@ -50,11 +56,26 @@ export const useUserStore = defineStore('user', {
           if (parsed.username && parsed.registrationDate && parsed.token) {
             this.setUser(parsed)
           } else {
-            this.logout() // если данные битые — очищаем
+            this.logout()
           }
-        } catch (e) {
-          this.logout() // если JSON не парсится
+        } catch {
+          this.logout()
         }
+      }
+    },
+
+    // ✅ Новый метод
+    async fetchUserInfo() {
+      try {
+        const res = await fetch('/auth/user', {
+          headers: this.authHeader,
+        })
+        if (!res.ok) throw new Error('Ошибка загрузки профиля')
+        const data = await res.json()
+        this.username = data.username
+        this.registrationDate = data.createdAt
+      } catch (e) {
+        console.error(e)
       }
     },
   },

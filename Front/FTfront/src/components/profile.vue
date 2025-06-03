@@ -1,7 +1,9 @@
 <template>
   <main>
+    <!-- === ПРОФИЛЬ === -->
     <section class="profile">
       <img src="../assets/icons/avatar.png" alt="Фото пользователя" class="avatar" />
+
       <div class="profile-info">
         <div>
           <strong>{{ user.username || 'USER' }}</strong>
@@ -11,25 +13,31 @@
         <div id="expenseDisplay" :data-value="expenseTotal">Расходы: {{ expenseTotal }}₽</div>
         <div>С {{ formatDate(user.registrationDate) }}</div>
       </div>
-      <button class="logout-btn" @click="logout">Выйти из аккаунта</button>
+
+      <div class="profile-actions">
+        <button class="edit-btn" @click="openEditProfileModal">Редактировать</button>
+        <button class="logout-btn" @click="logout">Выйти</button>
+      </div>
     </section>
 
+    <!-- === ФИНАНСЫ === -->
     <div class="section-title">Мои финансы за этот месяц</div>
     <div id="balanceDisplay" :data-value="balance">Общий баланс: {{ balance }} ₽</div>
-
     <canvas id="financeChart" height="350"></canvas>
 
+    <!-- === КНОПКИ ДОХОД/РАСХОД + ВАЛЮТА === -->
     <div class="buttons-row">
       <div class="buttons">
         <button class="income-btn" @click="showModal('income')">Доход</button>
         <button class="expense-btn" @click="showModal('expense')">Расход</button>
       </div>
+
       <div class="currency-switcher">
         <div class="dropdown" @click="toggleDropdown">
           {{ selectedCurrency.symbol }} {{ selectedCurrency.code }}
           <div class="dropdown-menu" v-show="dropdownVisible">
-            <div 
-              v-for="currency in currencies" 
+            <div
+              v-for="currency in currencies"
               :key="currency.code"
               @click.stop="changeCurrency(currency)"
             >
@@ -40,6 +48,7 @@
       </div>
     </div>
 
+    <!-- === МОДАЛ ДОХОД/РАСХОД === -->
     <div id="modal" class="modal" v-show="modalVisible" @click.self="modalVisible = false">
       <div class="modal-content">
         <h3>{{ modalTitle }}</h3>
@@ -48,44 +57,69 @@
         <button @click="submitAmount">OK</button>
       </div>
     </div>
+
+    <!-- === МОДАЛ РЕДАКТИРОВАНИЯ ПРОФИЛЯ === -->
+    <div id="editProfileModal" class="modal" v-show="editProfileVisible" @click.self="editProfileVisible = false">
+      <div class="modal-content">
+        <h3>Изменить профиль</h3>
+
+        <label>
+          Новый логин
+          <input type="text" v-model.trim="usernameInput" placeholder="Username" />
+        </label>
+
+        <label>
+          Новый пароль
+          <input type="password" v-model.trim="passwordInput" placeholder="Password" />
+        </label>
+
+        <div class="modal-actions">
+          <button @click="saveProfileChanges">Сохранить</button>
+          <button @click="editProfileVisible = false">Отмена</button>
+        </div>
+
+        <p v-if="profileError" class="error">{{ profileError }}</p>
+      </div>
+    </div>
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useUserStore } from '../stores/user.ts'
-import Chart from 'chart.js/auto'
+import { useUserStore } from '../stores/user'
 import { useRouter } from 'vue-router'
+import Chart from 'chart.js/auto'
 
+/* ---------- STORES & ROUTER ---------- */
 const userStore = useUserStore()
 const router = useRouter()
 
-const labels = ref([])
+/* ---------- ГЛАВНЫЕ РЕФЫ ---------- */
+const labels = ref<string[]>([])
 const balance = ref(0)
 const incomeTotal = ref(0)
 const expenseTotal = ref(0)
-const currentType = ref('')
-const amountInput = ref(0)
-const modalVisible = ref(false)
 
+const modalVisible = ref(false)
+const currentType = ref<'income' | 'expense'>('income')
+const amountInput = ref<number>(0)
+
+/* ---------- ВАЛЮТА ---------- */
 const dropdownVisible = ref(false)
 const currencies = [
   { code: 'RUB', symbol: '₽', rate: 1 },
   { code: 'USD', symbol: '$', rate: 0.011 },
   { code: 'EUR', symbol: '€', rate: 0.01 },
-]
+] as const
 const selectedCurrency = ref(currencies[0])
 
-const toggleDropdown = () => {
-  dropdownVisible.value = !dropdownVisible.value
-}
+/* ---------- ИЗМЕНЕНИЕ ПРОФИЛЯ ---------- */
+const editProfileVisible = ref(false)
+const usernameInput = ref('')
+const passwordInput = ref('')
+const profileError = ref('')
 
-const changeCurrency = (currency) => {
-  selectedCurrency.value = currency
-  dropdownVisible.value = false
-  updateCurrencyDisplays()
-}
-
+/* ---------- COMPUTED ---------- */
 const username = computed(() => userStore.username)
 const registrationDate = ref('')
 
@@ -95,10 +129,11 @@ const user = computed(() => ({
 }))
 
 const modalTitle = computed(() =>
-  currentType.value === 'income' ? 'Введите доход' : 'Введите расход'
+  currentType.value === 'income' ? 'Введите доход' : 'Введите расход',
 )
 
-const formatDate = (date) => {
+/* ---------- ФОРМАТ ДАТ ---------- */
+const formatDate = (date: string) => {
   if (!date) return 'Неизвестно'
   return new Intl.DateTimeFormat('ru-RU', {
     year: 'numeric',
@@ -107,9 +142,13 @@ const formatDate = (date) => {
   }).format(new Date(date))
 }
 
+/* ---------- API ---------- */
 const loadUserData = async () => {
   try {
-    const res = await fetch('/api/user')
+    // /api/user → возвращает объект с createdAt
+    const res = await fetch('/auth/user', {
+      headers: userStore.authHeader,
+    })
     if (!res.ok) throw new Error('Ошибка загрузки данных пользователя')
     const data = await res.json()
     registrationDate.value = data.createdAt || ''
@@ -119,9 +158,10 @@ const loadUserData = async () => {
   }
 }
 
-let financeChart
+/* ---------- ФИНАНСОВЫЙ ГРАФИК ---------- */
+let financeChart: Chart<'bar'>
 
-const updateChart = (amount, type) => {
+const updateChart = (amount: number, type: 'income' | 'expense') => {
   if (type === 'income') {
     balance.value += amount
     incomeTotal.value += amount
@@ -138,13 +178,17 @@ const updateChart = (amount, type) => {
   updateCurrencyDisplays()
 }
 
-const updateCurrencyDisplays = () => {
-  animateDisplay('balanceDisplay', balance.value * selectedCurrency.value.rate, 'Общий баланс: ', ` ${selectedCurrency.value.symbol}`)
-  animateDisplay('incomeDisplay', incomeTotal.value * selectedCurrency.value.rate, 'Доходы: ', ` ${selectedCurrency.value.symbol}`)
-  animateDisplay('expenseDisplay', expenseTotal.value * selectedCurrency.value.rate, 'Расходы: ', ` ${selectedCurrency.value.symbol}`)
+/* ---------- ВАЛЮТНЫЕ ПЕРЕСЧЁТЫ ---------- */
+const toggleDropdown = () => (dropdownVisible.value = !dropdownVisible.value)
+
+const changeCurrency = (currency: typeof currencies[number]) => {
+  selectedCurrency.value = currency
+  dropdownVisible.value = false
+  updateCurrencyDisplays()
 }
 
-const showModal = (type) => {
+/* ---------- МОДАЛ ДОХОД/РАСХОД ---------- */
+const showModal = (type: 'income' | 'expense') => {
   currentType.value = type
   modalVisible.value = true
   amountInput.value = 0
@@ -157,34 +201,122 @@ const submitAmount = () => {
   }
 }
 
-const animateDisplay = (id, endValue, prefix = 'Общий баланс: ', suffix = ' ₽') => {
+/* ---------- АНИМАЦИЯ ЦИФР ---------- */
+const animateDisplay = (
+  id: string,
+  endValue: number,
+  prefix = 'Общий баланс: ',
+  suffix = ' ₽',
+) => {
   const element = document.getElementById(id)
   if (!element) return
 
-  const startValue = parseFloat(element.dataset.value) || 0
+  const startValue = parseFloat(element.dataset.value || '0') || 0
   const duration = 800
   const startTime = performance.now()
 
-  function update(currentTime) {
+  function update(currentTime: number) {
     const elapsed = currentTime - startTime
     const progress = Math.min(elapsed / duration, 1)
     const currentValue = Math.floor(startValue + (endValue - startValue) * progress)
     element.textContent = `${prefix}${currentValue.toLocaleString()}${suffix}`
-    element.dataset.value = currentValue
+    element.dataset.value = currentValue.toString()
     if (progress < 1) requestAnimationFrame(update)
   }
 
   requestAnimationFrame(update)
 }
 
-onMounted(() => {
-  loadUserData()
+const updateCurrencyDisplays = () => {
+  animateDisplay(
+    'balanceDisplay',
+    balance.value * selectedCurrency.value.rate,
+    'Общий баланс: ',
+    ` ${selectedCurrency.value.symbol}`,
+  )
+  animateDisplay(
+    'incomeDisplay',
+    incomeTotal.value * selectedCurrency.value.rate,
+    'Доходы: ',
+    ` ${selectedCurrency.value.symbol}`,
+  )
+  animateDisplay(
+    'expenseDisplay',
+    expenseTotal.value * selectedCurrency.value.rate,
+    'Расходы: ',
+    ` ${selectedCurrency.value.symbol}`,
+  )
+}
 
-  const canvas = document.getElementById('financeChart')
-  if (!canvas) return
+/* ---------- РЕДАКТИРОВАНИЕ ПРОФИЛЯ ---------- */
+const openEditProfileModal = () => {
+  usernameInput.value = username.value
+  passwordInput.value = ''
+  profileError.value = ''
+  editProfileVisible.value = true
+}
 
-  const ctx = canvas.getContext('2d')
-  financeChart = new Chart(ctx, {
+const saveProfileChanges = async () => {
+  profileError.value = ''
+
+  const payload: Record<string, string> = {}
+  if (usernameInput.value && usernameInput.value !== userStore.username) {
+    payload.username = usernameInput.value
+  }
+  if (passwordInput.value) {
+    if (passwordInput.value.length < 6) {
+      profileError.value = 'Пароль должен содержать минимум 6 символов'
+      return
+    }
+    payload.password = passwordInput.value
+  }
+
+  if (Object.keys(payload).length === 0) {
+    editProfileVisible.value = false
+    return
+  }
+
+  try {
+    const res = await fetch('/auth/update', {
+      method: 'POST',
+      headers: { ...userStore.authHeader, 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+    if (!res.ok) throw new Error('Ошибка сохранения профиля')
+
+    const data = await res.json()
+
+    // обновляем Pinia-store новым токеном и логином
+    userStore.setUser({
+      username: data.user.username,
+      registrationDate: data.user.createdAt,
+      token: data.access_token,
+    })
+
+    editProfileVisible.value = false
+  } catch (e: any) {
+    profileError.value = e.message || 'Не удалось сохранить изменения'
+  }
+}
+
+/* ---------- ВЫХОД ---------- */
+const logout = () => {
+  userStore.logout()
+  router.push('/auth/login')
+}
+
+/* ---------- onMounted ---------- */
+onMounted(async () => {
+  await userStore.fetchUserInfo();
+  loadUserData();
+
+  const canvas = document.getElementById('financeChart') as HTMLCanvasElement | null;
+  if (!canvas) return;
+
+  const context = canvas.getContext('2d');
+  if (!context) return;
+
+  financeChart = new Chart(context, {
     type: 'bar',
     data: {
       labels: labels.value,
@@ -192,14 +324,10 @@ onMounted(() => {
         {
           label: 'Баланс',
           data: [],
-          backgroundColor: (context) => {
-            const value = context.raw
-            return value >= 0 ? 'rgba(75, 192, 192, 0.6)' : 'rgba(255, 99, 132, 0.6)'
-          },
-          borderColor: (context) => {
-            const value = context.raw
-            return value >= 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)'
-          },
+          backgroundColor: (ctx) =>
+            (ctx.raw as number) >= 0 ? 'rgba(75, 192, 192, 0.6)' : 'rgba(255, 99, 132, 0.6)',
+          borderColor: (ctx) =>
+            (ctx.raw as number) >= 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)',
           borderWidth: 1,
         },
       ],
@@ -209,39 +337,23 @@ onMounted(() => {
       scales: {
         y: {
           beginAtZero: true,
-          ticks: {
-            color: '#fff',
-          },
-          grid: {
-            color: 'rgba(255, 255, 255, 0.1)',
-          },
+          ticks: { color: '#fff' },
+          grid: { color: 'rgba(255,255,255,0.1)' },
         },
         x: {
-          ticks: {
-            color: '#fff',
-          },
-          grid: {
-            color: 'rgba(255, 255, 255, 0.1)',
-          },
+          ticks: { color: '#fff' },
+          grid: { color: 'rgba(255,255,255,0.1)' },
         },
       },
       plugins: {
-        legend: {
-          labels: {
-            color: '#fff',
-          },
-        },
+        legend: { labels: { color: '#fff' } },
       },
     },
-  })
+  });
 
-  updateCurrencyDisplays()
-})
+  updateCurrencyDisplays();
+});
 
-const logout = () => {
-  userStore.logout()
-  router.push('/auth/login')
-}
 </script>
 
 <style scoped>
@@ -448,5 +560,25 @@ button:hover {
 
 .currency-switcher .dropdown-menu div:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.error {
+  margin-top: 0.5rem;
+  color: #ff6b6b;
+}
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.edit-btn,
+.logout-btn {
+  padding: 0.4rem 0.8rem;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 </style>

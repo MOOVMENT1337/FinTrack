@@ -34,7 +34,7 @@ let AuthController = class AuthController {
         return { message: 'Logged out successfully' };
     }
     async updateUser(req, updateUserDto) {
-        // Реализация обновления данных пользователя
+        return this.authService.updateUser(req.user.id, updateUserDto);
     }
     async deleteAccount(req) {
         // Реализация удаления аккаунта

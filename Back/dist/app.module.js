@@ -68,7 +68,7 @@ exports.AppModule = AppModule = __decorate([
                 host: 'localhost',
                 port: 5432,
                 username: 'postgres',
-                password: '110',
+                password: '12345',
                 database: 'postgres',
                 entities: [user_entity_1.User, operation_entity_1.Operation, bitcoin_entity_1.BitcoinWallet, ethereum_entity_1.EthereumWallet],
                 synchronize: true,
