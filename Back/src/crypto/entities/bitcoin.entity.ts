@@ -6,7 +6,7 @@ export class BitcoinWallet {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'decimal', precision: 18, scale: 8, default: 0 })
+  @Column({ name: 'balance_bitcoin', type: 'decimal', precision: 18, scale: 8, default: 0 })
   balance!: number;
 
   @ManyToOne(() => User, (user) => user.bitcoinWallets)
