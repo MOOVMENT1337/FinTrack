@@ -1463,3 +1463,115 @@ h2 {
   border-bottom: 1px solid #2a2a2a;
   font-size: 16px;
 }
+
+/* Стили Брокеры */
+.brokers-dropdown {
+  width: 250px !important;
+  padding: 15px !important;
+}
+
+.broker-feature {
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.broker-feature:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.broker-feature.highlight {
+  background: rgba(0, 198, 255, 0.08);
+  border-radius: 6px;
+  padding: 12px;
+  margin: 0 -12px;
+}
+
+.broker-divider {
+  height: 1px;
+  background: #2a2a2a;
+  margin: 10px 0;
+}
+
+.brokers-dropdown .feature-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.brokers-dropdown .feature-desc {
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.4;
+  display: block;
+}
+
+.brokers-dropdown .highlight .feature-title {
+  color: #00c6ff;
+}
+
+.brokers-dropdown h3 {
+  color: #00c6ff;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #2a2a2a;
+  font-size: 16px;
+}
+
+/* Стили Ещё */
+.more-dropdown {
+  width: 250px !important;
+  padding: 15px !important;
+}
+
+.more-feature {
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.more-feature:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.more-feature.highlight {
+  background: rgba(0, 198, 255, 0.08);
+  border-radius: 6px;
+  padding: 12px;
+  margin: 0 -12px;
+}
+
+.more-divider {
+  height: 1px;
+  background: #2a2a2a;
+  margin: 10px 0;
+}
+
+.more-dropdown .feature-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.more-dropdown .feature-desc {
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.4;
+  display: block;
+}
+
+.more-dropdown .highlight .feature-title {
+  color: #00c6ff;
+}
+
+.more-dropdown h3 {
+  color: #00c6ff;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #2a2a2a;
+  font-size: 16px;
+}
