@@ -24,7 +24,7 @@ import { CryptoModule } from './crypto/crypto.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: '12345',
+      password: 'admin',
       database: 'postgres',
       entities: [User, Operation, BitcoinWallet, EthereumWallet],
       synchronize: true,

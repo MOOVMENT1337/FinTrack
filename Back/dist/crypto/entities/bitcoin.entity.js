@@ -20,7 +20,7 @@ __decorate([
     __metadata("design:type", Number)
 ], BitcoinWallet.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'decimal', precision: 18, scale: 8, default: 0 }),
+    (0, typeorm_1.Column)({ name: 'balance_bitcoin', type: 'decimal', precision: 18, scale: 8, default: 0 }),
     __metadata("design:type", Number)
 ], BitcoinWallet.prototype, "balance", void 0);
 __decorate([
