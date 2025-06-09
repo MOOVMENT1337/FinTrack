@@ -57,10 +57,11 @@ let AuthService = class AuthService {
         this.usersRepository = usersRepository;
         this.jwtService = jwtService;
     }
+    /* ----------- register ----------- */
     async register(registerDto) {
         const { username, email, password } = registerDto;
         const userExists = await this.usersRepository.findOne({
-            where: [{ username }, { email }]
+            where: [{ username }, { email }],
         });
         if (userExists) {
             throw new Error('Username or email already exists');
@@ -78,6 +79,7 @@ let AuthService = class AuthService {
             },
         };
     }
+    /* ----------- login ----------- */
     async login(loginDto) {
         const { username, password } = loginDto;
         const user = await this.usersRepository.findOne({ where: { username } });
@@ -95,21 +97,21 @@ let AuthService = class AuthService {
             },
         };
     }
+    /* ----------- validateUser (для JwtGuard) ----------- */
     async validateUser(payload) {
-        return await this.usersRepository.findOne(payload.sub);
+        return await this.usersRepository.findOne({ where: { id: payload.sub } });
     }
+    /* ----------- updateUser ----------- */
     async updateUser(userId, dto) {
         const user = await this.usersRepository.findOne({ where: { id: userId } });
-        if (!user) {
+        if (!user)
             throw new Error('User not found');
-        }
         if (dto.username && dto.username !== user.username) {
             const exists = await this.usersRepository.findOne({
                 where: { username: dto.username },
             });
-            if (exists) {
+            if (exists)
                 throw new Error('Username already taken');
-            }
             user.username = dto.username;
         }
         if (dto.password) {
@@ -125,6 +127,18 @@ let AuthService = class AuthService {
                 email: user.email,
                 createdAt: user.createdAt,
             },
+        };
+    }
+    /* ----------- ✅ новый метод getUser ----------- */
+    async getUser(userId) {
+        const user = await this.usersRepository.findOne({ where: { id: userId } });
+        if (!user)
+            throw new Error('User not found');
+        return {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            createdAt: user.createdAt,
         };
     }
 };

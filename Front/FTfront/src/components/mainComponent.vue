@@ -465,7 +465,7 @@ main {
   flex-direction: column;
   justify-content: center;
   padding: 40px;
-  background: url('https://static.tradingview.com/static/bundles/leo-look-768.1d2a29fb4592122e55cd.webp') no-repeat center center/cover;
+  background: url('https://static.tradingview.com/static/bundles/space-desktop.ee9d3559669f379d3931.webp') no-repeat center center/cover;
 }
 
 .marketing-content {

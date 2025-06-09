@@ -13,7 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
-const common_1 = require("@nestjs/common");
+const common_1 = require("@nestjs/common"); // добавляем Get
 const auth_service_1 = require("./auth.service");
 const register_dto_1 = require("./dto/register.dto");
 const login_dto_1 = require("./dto/login.dto");
@@ -30,7 +30,6 @@ let AuthController = class AuthController {
         return this.authService.login(loginDto);
     }
     async logout(req) {
-        // В реальном приложении здесь можно добавить токен в blacklist
         return { message: 'Logged out successfully' };
     }
     async updateUser(req, updateUserDto) {
@@ -38,6 +37,9 @@ let AuthController = class AuthController {
     }
     async deleteAccount(req) {
         // Реализация удаления аккаунта
+    }
+    async getUser(req) {
+        return this.authService.getUser(req.user.id);
     }
 };
 exports.AuthController = AuthController;
@@ -80,6 +82,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "deleteAccount", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('user'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "getUser", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
