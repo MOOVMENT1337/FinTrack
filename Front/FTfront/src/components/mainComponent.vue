@@ -141,6 +141,143 @@
         </div>
       </section>
     </section>
+
+    <!-- Russia News Section -->
+    <section class="russia-news">
+      <div class="section-header">
+        <h2>Новости по акциям России</h2>
+      </div>
+      
+      <div class="news-grid">
+        <!-- Колонка 1 -->
+        <div class="news-column">
+          <!-- Новость 1 -->
+          <div class="news-item">
+            <div class="news-time-source">1 минут назад - Reuters</div>
+            <div class="news-title">Рубль дорожает на форексе и пытается вырасти по итогам торгов Мосбиржи</div>
+          </div>
+          
+          <!-- Новость 4 -->
+          <div class="news-item">
+            <div class="news-time-source">4 часов назад - Reuters</div>
+            <div class="news-title">Эксперация крупных FX-опционов сегодня</div>
+          </div>
+          
+          <!-- Новость 7 -->
+          <div class="news-item">
+            <div class="news-time-source">7 часов назад - Reuters</div>
+            <div class="news-title">Рубль растет на Мосбирже с оглядкой на БИП и мирные инициативы</div>
+          </div>
+          
+          <!-- Новость 10 -->
+          <div class="news-item">
+            <div class="news-time-source">10 часов назад - Reuters</div>
+            <div class="news-title">Рубль в плюсе, невзирая на дешевеющую нефть и утрату налоговой поддержки</div>
+          </div>
+        </div>
+        
+        <!-- Колонка 2 -->
+        <div class="news-column">
+          <!-- Новость 2 -->
+          <div class="news-item">
+            <div class="news-time-source">2 часа назад - Reuters</div>
+            <div class="news-title">Нехватка в 1 кв получил чистый убыток в 35 млрд руб по РСБУ</div>
+          </div>
+          
+          <!-- Новость 5 -->
+          <div class="news-item">
+            <div class="news-time-source">1 час назад - Reuters</div>
+            <div class="news-title">Ритейлер Магнит в 24г нарастил выручку на 19,65, сократил чистую прибыль на 24,43</div>
+          </div>
+          
+          <!-- Новость 8 -->
+          <div class="news-item">
+            <div class="news-time-source">8 часов назад - Reuters</div>
+            <div class="news-title">МНЕНИЕ - Взрывной рост золота должен насторожить валютных трейдеров</div>
+          </div>
+          
+          <!-- Новость 11 -->
+          <div class="news-item">
+            <div class="news-time-source">11 часов - Reuters</div>
+            <div class="news-title">ТГК-1 снизила производство Уэмертин в 1 кв на 6,2% г/г</div>
+          </div>
+        </div>
+        
+        <!-- Колонка 3 -->
+        <div class="news-column">
+          <!-- Новость 3 -->
+          <div class="news-item">
+            <div class="news-time-source">3 часов назад - Reuters</div>
+            <div class="news-title">ЛАЙК может отказаться от финальных дивидендов за 24г</div>
+          </div>
+          
+          <!-- Новость 6 -->
+          <div class="news-item">
+            <div class="news-time-source">5 часов назад - Reuters</div>
+            <div class="news-title">Рубль бодр на форексе, но скромничает на Мосбирже без налоговой поддержки</div>
+          </div>
+          
+          <!-- Новость 9 -->
+          <div class="news-item">
+            <div class="news-time-source">9 часов назад - Reuters</div>
+            <div class="news-title">Рубль набирает более 1% на FX, но забуксовал на МОEX без поддержки налогов</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="news-footer">
+        <a href="#" class="show-all-news">Показать все новости</a>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="stats-container">
+        <div class="stats-header">
+          <h2>Любовь в каждом <span class="hashtag">#FinTrack</span></h2>
+        </div>
+        
+        <div class="stats-grid">
+          <!-- Статистика 1 -->
+          <div class="stat-card">
+            <div class="stat-number">100M+</div>
+            <div class="stat-description">Столько трейдеров и инвесторов пользуются нашей платформой</div>
+          </div>
+          
+          <!-- Статистика 2 -->
+          <div class="stat-card">
+            <div class="stat-number">#1</div>
+            <div class="stat-description">Самый популярный в мире сайт в сфере инвестирования</div>
+          </div>
+          
+          <!-- Статистика 3 -->
+          <div class="stat-card">
+            <div class="stat-number">1.5M+</div>
+            <div class="stat-description">Оценок со средним рейтингом 4,9 у наших мобильных приложений</div>
+          </div>
+          
+          <!-- Статистика 4 -->
+          <div class="stat-card">
+            <div class="stat-number">10M+</div>
+            <div class="stat-description">Оригинальных скриптов и идей от наших пользователей</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="cta-container">
+        <div class="cta-content">
+          <h3>Где бы вы ни оказались</h3>
+          <div class="cta-slogan">
+            <span>Look first /</span><br>
+            <span>Then leap<span class="dot">.</span></span>
+          </div>
+          <a href="#" class="cta-button">О FinTrack</a>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -895,6 +1032,212 @@ main {
   color: #00c6ff;
 }
 
+.stats-section {
+  background-color: #1a1a1a;
+  padding: 40px 0;
+  margin: 30px auto; /* Изменено */
+  max-width: 1400px; /* Добавлено */
+  width: calc(100% - 40px); /* Добавлено */
+}
+  
+.stats-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+  
+  .stats-header h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 40px;
+    color: #fff;
+  }
+  
+  .hashtag {
+    color: #4CAF50;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+  }
+  
+  .stat-card {
+    background-color: #222;
+    border-radius: 10px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 15px;
+  }
+  
+  .stat-description {
+    font-size: 16px;
+    color: #ddd;
+    line-height: 1.4;
+  }
+  
+/* CTA Section */
+.cta-section {
+  background-color: #121212;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+  background-image: url(../assets/images/lftl.jpg);
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 20px;
+  margin: 0 auto; /* Добавлено */
+  max-width: 1400px; /* Добавлено */
+  width: calc(100% - 40px); /* Добавлено */
+}
+
+.cta-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Контент */
+.cta-content {
+  text-align: left;
+  max-width: 500px;
+  z-index: 2;
+}
+
+.cta-content h3 {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.cta-slogan {
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.cta-slogan span:first-child {
+  color: #fff;
+}
+
+.cta-slogan .dot {
+  color: #fff;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: #fff;
+  color: #000;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* Стили для блока новостей */
+.russia-news {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto; /* Изменено */
+  max-width: 1400px; /* Добавлено */
+  width: calc(100% - 40px); /* Добавлено */
+}
+  
+  .russia-news .section-header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  
+  .russia-news .section-header h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #fff;
+  }
+  
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .news-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .news-item {
+    padding: 12px;
+    background-color: #222;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    flex: 1;
+  }
+  
+  .news-item:hover {
+    background-color: #2a2a2a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .news-time-source {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 5px;
+  }
+  
+  .news-title {
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.4;
+  }
+  
+  .news-footer {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .show-all-news {
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+  
+  .show-all-news:hover {
+    color: #3e8e41;
+  }
+  
 /* Responsive */
 @media (max-width: 768px) {
   .marketing-main {
